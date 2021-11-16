@@ -16,7 +16,7 @@ const slice = createSlice({
       state.list.unshift(action.payload);
     },
     update: (state, action) => {
-      console.log('update dynamic form store =======', action)
+      console.log('update dynamic form store', action)
     },
     remove: (state, action) => {
       // eslint-disable-next-line no-negated-condition

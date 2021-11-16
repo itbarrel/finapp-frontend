@@ -77,7 +77,7 @@ const CreateForm = memo(({ selectedFrom }) => {
     }
     setEditorLoaded(true)
     if (selectedFrom) {
-      console.log('Edit form', selectedFrom)
+      log('Edit form', selectedFrom)
       form.setFieldsValue(selectedFrom)
     }
     dispatch(getFormTypes(token))

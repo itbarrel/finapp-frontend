@@ -15,7 +15,6 @@ import {
 } from "../../constants/ThemeSetting";
 import IntlMessages from "../../utils/IntlMessages";
 import { useDispatch, useSelector } from "react-redux";
-// import { setPathName } from "../../store/slices/ui/settings";
 import permissionCheck from "../../utils/PermissionGuard";
 import { setLoading } from "../../store/slices/loader";
 
@@ -35,15 +34,8 @@ const SidebarContent = () => {
     }
     return "";
   };
-  // const getNavStyleSubMenuClass = (navStyle) => {
-  //   if (navStyle === NAV_STYLE_NO_HEADER_MINI_SIDEBAR) {
-  //     return "gx-no-header-submenu-popup";
-  //   }
-  //   return "";
-  // };
 
   useEffect(() => {
-    // dispatch(setPathName(router.pathname));
     return () => {
       dispatch({ type: setLoading.type, payload: {} });
     };
@@ -60,7 +52,6 @@ const SidebarContent = () => {
           className={`gx-sidebar-notifications ${getNoHeaderClass(navStyle)}`}
         >
           <UserProfile />
-          {/* <AppsNavigation /> */}
         </div>
         <CustomScrollbars className="gx-layout-sider-scrollbar">
           {/* side bar */}
@@ -70,7 +61,7 @@ const SidebarContent = () => {
             theme={themeType === THEME_TYPE_LITE ? "lite" : "dark"}
             mode="inline"
           >
-            {/* Main text */}
+            {/* DashBoard */}
             <MenuItemGroup
               key="dashboard"
               className="gx-menu-group"
@@ -100,113 +91,52 @@ const SidebarContent = () => {
                 </Link>
               </Menu.Item>
             </MenuItemGroup>
-
             {/* settings */}
-            {
-              <MenuItemGroup
-                key="setting"
-                className="gx-menu-group"
-                title={<IntlMessages id="settings" />}
-              >
-                {/* Accounts */}
-                {permissionCheck({ Accounts: ["view"] }) && (
-                  <Menu.Item key="accounts">
-                    <Link href="/secure/accounts">
-                      <a>
-                        <i className="icon icon-crm" />
-                        <span>
-                          <IntlMessages id="accounts" />
-                        </span>
-                      </a>
-                    </Link>
-                  </Menu.Item>
-                )}
-
-                {/* Users */}
-                {permissionCheck({ Users: ["view"] }) && (
-                  <Menu.Item key="users">
-                    <Link href="/secure/users">
-                      <a>
-                        <i className="icon icon-widgets" />
-                        <span>
-                          <IntlMessages id="Users" />
-                        </span>
-                      </a>
-                    </Link>
-                  </Menu.Item>
-                )}
-
-                {/* roles */}
-                {permissionCheck({ Roles: ["view"] }) && (
-                  <Menu.Item key="roles">
-                    <Link href="/secure/roles">
-                      <a>
-                        <i className="icon icon-culture-calendar" />
-                        <span>
-                          <IntlMessages id="Roles" />
-                        </span>
-                      </a>
-                    </Link>
-                  </Menu.Item>
-                )}
-
-                {/* Department */}
-                {permissionCheck({ Departments: ["view"] }) && (
-                  <Menu.Item key="departments">
-                    <Link href="/secure/departments">
-                      <a>
-                        <i className="icon icon-basic-calendar" />
-                        <span>
-                          <IntlMessages id="departments" />
-                        </span>
-                      </a>
-                    </Link>
-                  </Menu.Item>
-                )}
-
-                {/* incident */}
-                {permissionCheck({ Incidents: ["view"] }) && (
-                  <Menu.Item key="incident">
-                    <Link href="/secure/incidents">
-                      <a>
-                        <i className="icon icon-cards-list-view" />
-                        <span>
-                          <IntlMessages id="incidents" />
-                        </span>
-                      </a>
-                    </Link>
-                  </Menu.Item>
-                )}
-
-                {/* Task */}
-                {permissionCheck({ Tasks: ["view"] }) && (
-                  <Menu.Item key="Task">
-                    <Link href="/secure/tasks">
-                      <a>
-                        <i className="icon icon-tasks" />
-                        <span>
-                          <IntlMessages id="task" />
-                        </span>
-                      </a>
-                    </Link>
-                  </Menu.Item>
-                )}
-
-                {/* Dynamic Form list*/}
-                {true && (
-                  <Menu.Item key="dynamicFormList">
-                    <Link href="/secure/dynamicForm/list">
-                      <a>
-                        <i className="icon icon-tasks" />
-                        <span>
-                          <IntlMessages id="form.list" />
-                        </span>
-                      </a>
-                    </Link>
-                  </Menu.Item>
-                )}
-              </MenuItemGroup>
-            }
+            <MenuItemGroup
+              key="setting"
+              className="gx-menu-group"
+              title={<IntlMessages id="settings" />}
+            >
+              {/* Accounts */}
+              {permissionCheck({ Accounts: ["view"] }) && (
+                <Menu.Item key="accounts">
+                  <Link href="/secure/accounts">
+                    <a>
+                      <i className="icon icon-crm" />
+                      <span>
+                        <IntlMessages id="accounts" />
+                      </span>
+                    </a>
+                  </Link>
+                </Menu.Item>
+              )}
+              {/* Users */}
+              {permissionCheck({ Users: ["view"] }) && (
+                <Menu.Item key="users">
+                  <Link href="/secure/users">
+                    <a>
+                      <i className="icon icon-widgets" />
+                      <span>
+                        <IntlMessages id="Users" />
+                      </span>
+                    </a>
+                  </Link>
+                </Menu.Item>
+              )}
+              {/* roles */}
+              {permissionCheck({ Roles: ["view"] }) && (
+                <Menu.Item key="roles">
+                  <Link href="/secure/roles">
+                    <a>
+                      <i className="icon icon-culture-calendar" />
+                      <span>
+                        <IntlMessages id="Roles" />
+                      </span>
+                    </a>
+                  </Link>
+                </Menu.Item>
+              )}
+            </MenuItemGroup>
           </Menu>
         </CustomScrollbars>
       </div>
