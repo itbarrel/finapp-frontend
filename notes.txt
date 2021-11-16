@@ -1,0 +1,38 @@
+###############################
+Redux 
+  Redux,
+    Redux Core Principles working
+    [store, reduces, subscriber, getstate, data hinding concepts]
+  Redux Toolkit
+    Store [configureStore]
+    Reducer
+      Root Reducer
+      entitiles (Sub-Reducers) we can make sub reducers for more user-friendly and best practices.
+    slices [createSlice]
+      state, actionType, action creatores togathers 
+      memoization [re-selectore] 
+        if bug slice does't change. Then this selectore fetch data from cache. Its called memoization
+    Middleware (Default Thunk)
+      Custom Middler*
+      Middleware with custom parmeters* 
+      Curring*
+      Calling APIs on middleware behalf on actions
+    Redux Strucator.
+  Redux NextJs 
+    initile redux global state in next 
+    Redux-wraper for NextJS  
+    hydration or HYDRATE
+      handle state client vs server side.
+    redux persistance
+    caching
+
+
+      
+
+                                               || Pending
+SEO Implement                                   || Pending  
+Docker                                          || Pending
+Auto Deployment config                          || Pending
+Next Config                                     || Pending
+Axios                                           || Pending
+React Hooks Form                                || Pending

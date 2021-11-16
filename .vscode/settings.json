@@ -1,0 +1,27 @@
+{
+  "editor.insertSpaces": true,
+  "editor.formatOnSave": true,
+  "editor.unfoldOnClickAfterEndOfLine": true,
+  "files.insertFinalNewline": true,
+  "html.format.endWithNewline": true,
+  "eslint.validate": ["javascript", "html"],
+  "editor.codeActionsOnSave": {
+    "source.fixAll.eslint": true
+  },
+  "cSpell.words": [
+    "abcdefghijklmnopqrstuvwxyz",
+    "enteries",
+    "gaxon",
+    "nafirst",
+    "Nameme",
+    "neature",
+    "ogimg",
+    "Popconfirm",
+    "reduxjs",
+    "resourses",
+    "selectbox",
+    "stylelint",
+    "submenu",
+    "Usergroup"
+  ]
+}
