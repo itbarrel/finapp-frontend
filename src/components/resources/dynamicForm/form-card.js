@@ -10,14 +10,14 @@ import Link from 'next/link'
 import { log } from '../../../utils/console-log'
 import config from '../../../configs'
 
-const DynamicFormCard = memo(({ name, description, type, id, form }) => {
+const DynamicFormCard = memo(({ name, description, type, id, form, slug }) => {
   const dispatch = useDispatch();
   let token = config.dynamicFormToken
 
 
   const handleDelete = (id) => {
-    dispatch(removeDynamicForm(id, token))
-    dispatch(current_item(form));
+    // dispatch(removeDynamicForm(id, token))
+    // dispatch(current_item(form));
   }
 
   return (
@@ -27,11 +27,11 @@ const DynamicFormCard = memo(({ name, description, type, id, form }) => {
         <>
           <ul className="gx-list-inline gx-ml-auto gx-mb-0 gx-text-grey">
             <li>
-              <Link href={`/secure/dynamicForm/${id}`} passHref>
+              <Link href={`/secure/accounts/${slug}/forms/${id}`} passHref>
                 <EyeOutlined style={{ fontSize: '18px' }} />
               </Link>
             </li>
-            <li>
+            {/* <li>
               <Link href={`/secure/dynamicForm/edit/${id}`} passHref>
                 <EditOutlined style={{ fontSize: '18px' }} />
               </Link>
@@ -45,7 +45,7 @@ const DynamicFormCard = memo(({ name, description, type, id, form }) => {
               >
                 <DeleteOutlined />
               </Popconfirm>
-            </li>
+            </li> */}
           </ul >
         </>
       }

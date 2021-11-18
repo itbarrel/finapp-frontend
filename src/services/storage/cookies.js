@@ -31,6 +31,9 @@ const CookieService = {
   removeToken() {
     Cookie.remove(TOKEN_KEY);
   },
+  removeDynamicToken() {
+    Cookie.remove(DYNAMIC_FORM_TOKEN);
+  },
 };
 
 export default CookieService;

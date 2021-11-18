@@ -7,10 +7,14 @@ const slice = createSlice({
     list: [],
     update_item: [],
     formType: [],
+    accounts: {},
   },
   reducers: {
     all: (state, action) => {
       state.list = action.payload.data;
+    },
+    getAllAccounts: (state, action) => {
+      state.accounts = action.payload;
     },
     add: (state, action) => {
       state.list.unshift(action.payload);
@@ -44,7 +48,7 @@ const slice = createSlice({
   },
 });
 
-export const { all, add, update, remove, current_item, formType, failed } = slice.actions;
+export const { all, getAllAccounts, add, update, remove, current_item, formType, failed } = slice.actions;
 
 export const getFormTypesList = (token) => (dispatch) => {
   return dispatch(
@@ -107,6 +111,18 @@ export const removeDynamicForm = (id, token) => (dispatch) => {
       onSuccess: remove.type,
       onError: failed.type,
       notify: true,
+    })
+  );
+};
+
+export const getAccounts = (token) => (dispatch) => {
+  return dispatch(
+    dynamicFormApiCallBegan({
+      url: `v1/forms/public`,
+      token,
+      method: "get",
+      onSuccess: getAllAccounts.type,
+      onError: failed.type,
     })
   );
 };

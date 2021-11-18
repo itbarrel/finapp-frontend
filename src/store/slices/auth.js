@@ -10,6 +10,7 @@ const slice = createSlice({
     permissions: {},
     loader: {},
     user: null,
+    domain: {},
     token: null,
     dynamicFormToken: null,
     hasErrors: false,
@@ -19,15 +20,16 @@ const slice = createSlice({
       return state;
     },
     login: (state, action) => {
-      const { token, user, permissions, dynamicFormToken } = action.payload;
+      const { token, user, permissions, domain } = action.payload;
       state.loader = false;
       state.token = token;
-      state.dynamicFormToken = dynamicFormToken;
       state.isAuthenticated = !!token;
       state.permissions = permissions;
       state.user = user;
+      state.domain = domain;
       state.hasErrors = false;
-      _login(token, dynamicFormToken);
+      console.log('asdf DynamiFormToken action.payload', action.payload)
+      _login(token, domain?.dynamicFormToken);
     },
     logout: (state) => {
       _logout();
@@ -64,6 +66,7 @@ const slice = createSlice({
 
 export const {
   start,
+  getAllAccounts,
   login,
   logout,
   update,
@@ -154,6 +157,7 @@ export const confirmLogin = () => (dispatch) => {
     })
   );
 };
+
 
 export const onLogOut = () => (dispatch) => {
   dispatch(logout());

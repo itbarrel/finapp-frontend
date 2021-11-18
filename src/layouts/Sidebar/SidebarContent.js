@@ -24,6 +24,8 @@ const SidebarContent = () => {
   const dispatch = useDispatch();
   const router = useRouter();
   let { navStyle, themeType, pathname } = useSelector(({ ui }) => ui.settings);
+  const { isDynamicFormsPublic, dynamicFormToken } = useSelector(({ auth }) => auth.domain);
+  const accounts = useSelector(({ resources }) => resources?.DynamicForm?.accounts);
 
   const getNoHeaderClass = (navStyle) => {
     if (
@@ -136,7 +138,50 @@ const SidebarContent = () => {
                   </Link>
                 </Menu.Item>
               )}
+
+              {/* Dynamic Form list*/}
+              {dynamicFormToken && (
+                <Menu.Item key="dynamicFormList">
+                  <Link href="/secure/dynamicForm/list">
+                    <a>
+                      <i className="icon icon-tasks" />
+                      <span>
+                        <IntlMessages id="form.list" />
+                      </span>
+                    </a>
+                  </Link>
+                </Menu.Item>
+              )}
+
             </MenuItemGroup>
+
+            {(isDynamicFormsPublic && accounts) && (
+              <MenuItemGroup
+                key="Form"
+                className="gx-menu-group"
+                title={'Form'}
+              >
+                {
+                  accounts?.map((account, index) => {
+                    return (
+                      <>
+                        <Menu.Item key={index}>
+                          <Link href={`/secure/accounts/${account.name}/forms`}>
+                            <a>
+                              <i className="icon icon-crm" />
+                              <span>
+                                {account.name}
+                              </span>
+                            </a>
+                          </Link>
+                        </Menu.Item>
+                      </>
+                    )
+                  })
+                }
+              </MenuItemGroup>
+            )}
+
           </Menu>
         </CustomScrollbars>
       </div>

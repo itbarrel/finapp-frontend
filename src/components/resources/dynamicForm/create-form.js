@@ -148,6 +148,26 @@ const CreateForm = memo(({ selectedFrom }) => {
                       }
                     </Select>
                   </Form.Item>
+
+                  <Form.Item
+                    label={'Visibility'}
+                    hasFeedback
+                    name="public"
+                    className="gx-mx-0 gx-my-1"
+                  // rules={validateDynamicForm.formType}
+                  >
+                    <Select allowClear onChange={handleMultipleFormType}>
+                      {
+                        [{ name: 'Public', value: true }, { name: 'Private', value: false }]?.map((form) => {
+                          return (
+                            <Option key={getKey()} value={form.value}>
+                              {form.name}
+                            </Option>
+                          )
+                        })
+                      }
+                    </Select>
+                  </Form.Item>
                 </Col>
               </Row>
               <Col lg={24}>
