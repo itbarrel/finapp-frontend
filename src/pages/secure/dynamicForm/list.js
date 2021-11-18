@@ -35,7 +35,7 @@ const List = memo(() => {
           <div>
             <h3 className='gx-my-0 gx-mt-2 gx-ml-2'>Dynamic Form List</h3>
           </div>
-          <Link href="/secure/dynamicForm" passHref>
+          <Link href="/secure/dynamicForm/create-form" passHref>
             <Button
               type={'primary'}
               icon={<PlusCircleOutlined />}
@@ -57,7 +57,7 @@ const List = memo(() => {
             return (
               <Fragment key={getKey()}>
                 <Col xl={6} lg={8} md={12} sm={12} xs={24} key={form.id}>
-                  <Form name={form.name} description={form.description} type={formType?.name} id={form.id} form={form} />
+                  <Form name={form.name} description={form.description} type={formType?.name} id={form.id} form={form} editBtn removeBtn />
                 </Col>
               </Fragment>
             );

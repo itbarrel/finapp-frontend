@@ -28,7 +28,6 @@ const slice = createSlice({
       state.user = user;
       state.domain = domain;
       state.hasErrors = false;
-      console.log('asdf DynamiFormToken action.payload', action.payload)
       _login(token, domain?.dynamicFormToken);
     },
     logout: (state) => {

@@ -102,7 +102,7 @@ const CreateForm = memo(({ selectedFrom }) => {
     <>
       <Col>
         {
-          (MultipleFormType === false) ? (
+          (MultipleFormType === false) && (
             <Alert
               message="Informational Notes"
               description={`The form type is can have only one form ${MultipleFormType ? 'non multiple' : 'multiple'}`}
@@ -110,7 +110,7 @@ const CreateForm = memo(({ selectedFrom }) => {
               showIcon
               closable
             />
-          ) : ''
+          )
         }
         <Form.Provider>
           <Form name="DynamicForm" onFinish={onFinish} form={form} scrollToFirstError >
@@ -136,7 +136,7 @@ const CreateForm = memo(({ selectedFrom }) => {
                     className="gx-mx-0 gx-my-1"
                     rules={validateDynamicForm.formType}
                   >
-                    <Select allowClear showSearch={true} onChange={handleMultipleFormType}>
+                    <Select allowClear onChange={handleMultipleFormType}>
                       {
                         formTypes?.map((form) => {
                           return (
@@ -154,11 +154,11 @@ const CreateForm = memo(({ selectedFrom }) => {
                     hasFeedback
                     name="public"
                     className="gx-mx-0 gx-my-1"
-                  // rules={validateDynamicForm.formType}
+                    rules={validateDynamicForm.visibility}
                   >
-                    <Select allowClear onChange={handleMultipleFormType}>
+                    <Select allowClear>
                       {
-                        [{ name: 'Public', value: true }, { name: 'Private', value: false }]?.map((form) => {
+                        [{ name: 'Public', value: 'true' }, { name: 'Private', value: 'false' }]?.map((form) => {
                           return (
                             <Option key={getKey()} value={form.value}>
                               {form.name}
@@ -188,7 +188,7 @@ const CreateForm = memo(({ selectedFrom }) => {
                   <Row>
                     {fields.map(({ key, name, fieldKey, ...field }, index) => {
                       return (
-                        <Fragment>
+                        <Fragment key={index}>
                           <Col xl={12} lg={12} md={24} sm={24} xs={24}>
                             <Form.Item required={false} fieldKey={[fieldKey, 'mainItem']} >
                               <Widget
@@ -339,7 +339,7 @@ const CreateForm = memo(({ selectedFrom }) => {
                                     />
                                   </Form.Item>
                                 </div>
-
+                                <h4 className={'gx-mx-2'}>Please select which property will show or hide</h4>
                                 <div className='gx-d-flex gx-text-nowrap'>
                                   {
                                     switchButtons.map((item) => {
@@ -350,12 +350,14 @@ const CreateForm = memo(({ selectedFrom }) => {
                                               name={[name, item.name]}
                                               label={item.Label}
                                               fieldKey={[fieldKey, item.name]}
-                                              valuePropName="checked"
+                                              valuePropName={"checked"}
+                                              initialValue={true}
                                               {...field}
                                             >
                                               <Switch
-                                                checkedChildren="Show"
-                                                unCheckedChildren="Hide"
+                                                defaultChecked
+                                                checkedChildren={item.Label === 'Encryption' ? 'Enable' : 'show'}
+                                                unCheckedChildren={item.Label === 'Encryption' ? 'Enable' : 'Hide'}
                                               />
                                             </Form.Item>
                                           </div>

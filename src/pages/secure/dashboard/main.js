@@ -11,10 +11,7 @@ const Dashboard = memo(() => {
   const dispatch = useDispatch();
   const accounts = useSelector(({ resources }) => resources?.DynamicForm?.accounts);
   const { isDynamicFormsPublic } = useSelector(({ auth }) => auth.domain);
-
   const token = ENV.dynamicFormToken;
-
-  console.log('asdfasdf ============================================================', accounts)
 
   useEffect(() => {
     if (isDynamicFormsPublic) {

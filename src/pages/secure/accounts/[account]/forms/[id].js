@@ -18,20 +18,12 @@ const View = memo(() => {
   const { id: formId, account } = router.query
   const list = useSelector(({ resources }) => resources?.DynamicForm?.accounts);
   const [selectedForm, setSelectedForm] = useState({})
-  // const FormList = useSelector(({ resources }) => resources.DynamicForm.list);
-  // const list = useSelector(({ resources }) => resources?.DynamicForm?.accounts);
+
   useEffect(() => {
     const findAccount = list.find((element) => element.name == account)
     const findForm = findAccount?.Forms.find((form) => form.id == formId)
     setSelectedForm(findForm)
   }, [formId, account])
-
-  useEffect(() => {
-    console.log('asdf formId', selectedForm.name)
-  }, [selectedForm])
-
-  // console.log('asdf formId', list.find((elem) => formId));
-  // console.log('asdf formId', formId, list)
 
   const onFinish = (formData) => {
     log("Form Data Submit", formData);

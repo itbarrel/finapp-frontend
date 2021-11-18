@@ -10,7 +10,7 @@ import Link from 'next/link'
 import { log } from '../../../utils/console-log'
 import config from '../../../configs'
 
-const DynamicFormCard = memo(({ name, description, type, id, form, slug }) => {
+const DynamicFormCard = memo(({ name, description, type, id, form, slug, editBtn, removeBtn }) => {
   const dispatch = useDispatch();
   let token = config.dynamicFormToken
 
@@ -31,21 +31,25 @@ const DynamicFormCard = memo(({ name, description, type, id, form, slug }) => {
                 <EyeOutlined style={{ fontSize: '18px' }} />
               </Link>
             </li>
-            {/* <li>
-              <Link href={`/secure/dynamicForm/edit/${id}`} passHref>
-                <EditOutlined style={{ fontSize: '18px' }} />
-              </Link>
-            </li>
-            <li>
-              <Popconfirm
-                title={<IntlMessages id="sure.for.delete" />}
-                okText={<IntlMessages id="Yes" />}
-                cancelText={<IntlMessages id="No" />}
-                onConfirm={() => handleDelete(id)}
-              >
-                <DeleteOutlined />
-              </Popconfirm>
-            </li> */}
+            {
+              editBtn && <li>
+                <Link href={`/secure/dynamicForm/edit/${id}`} passHref>
+                  <EditOutlined style={{ fontSize: '18px' }} />
+                </Link>
+              </li>
+            }
+            {
+              removeBtn && <li>
+                <Popconfirm
+                  title={<IntlMessages id="sure.for.delete" />}
+                  okText={<IntlMessages id="Yes" />}
+                  cancelText={<IntlMessages id="No" />}
+                  onConfirm={() => handleDelete(id)}
+                >
+                  <DeleteOutlined />
+                </Popconfirm>
+              </li>
+            }
           </ul >
         </>
       }

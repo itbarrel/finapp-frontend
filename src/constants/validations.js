@@ -88,6 +88,13 @@ export const validateDynamicForm = {
       whitespace: true,
     },
   ],
+  required: [
+    {
+      required: true,
+      message: "field is required",
+      whitespace: true,
+    },
+  ],
   name: [
     {
       required: true,
@@ -99,6 +106,13 @@ export const validateDynamicForm = {
     {
       required: true,
       message: "Please select form type",
+      whitespace: true,
+    },
+  ],
+  visibility: [
+    {
+      required: true,
+      message: "Please select form visibility",
       whitespace: true,
     },
   ],

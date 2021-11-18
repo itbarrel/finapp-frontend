@@ -24,14 +24,6 @@ const List = memo(() => {
   const { account } = router.query
   const [selected, setSelected] = useState(list.find((elem) => elem.name == account))
 
-
-  useEffect(() => {
-    console.log('asdf query router', selected?.Forms)
-    // console.log('asdf query router', list)
-    // console.log('asdf query router ==== ', list[0].name, account);
-    // console.log('asdf query router +++', list.find((elem) => elem.name == account))
-  }, [account])
-
   useEffect(() => {
     log("Dynamic Form list fetch",)
     log("Dynamic Form Types List fetch", formTypes)
@@ -63,7 +55,6 @@ const List = memo(() => {
           selected &&
           selected?.Forms.length > 0 &&
           selected?.Forms.map((form) => {
-            console.log('asdf render')
             return (
               <Fragment key={getKey()}>
                 <Col xl={6} lg={8} md={12} sm={12} xs={24} key={form.id}>
