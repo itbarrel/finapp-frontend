@@ -87,18 +87,6 @@ const SidebarContent = () => {
                   </a>
                 </Link>
               </Menu.Item>
-
-              {/* incident */}
-              <Menu.Item key={"/secure/dashboard/incidents"}>
-                <Link href="/secure/dashboard/incidents">
-                  <a>
-                    <i className="icon icon-etherium" />
-                    <span>
-                      <IntlMessages id="incidents" />
-                    </span>
-                  </a>
-                </Link>
-              </Menu.Item>
             </MenuItemGroup>
 
             {/* settings */}
@@ -144,48 +132,6 @@ const SidebarContent = () => {
                         <i className="icon icon-culture-calendar" />
                         <span>
                           <IntlMessages id="Roles" />
-                        </span>
-                      </a>
-                    </Link>
-                  </Menu.Item>
-                )}
-
-                {/* Department */}
-                {permissionCheck({ Departments: ["view"] }) && (
-                  <Menu.Item key="departments">
-                    <Link href="/secure/departments">
-                      <a>
-                        <i className="icon icon-basic-calendar" />
-                        <span>
-                          <IntlMessages id="departments" />
-                        </span>
-                      </a>
-                    </Link>
-                  </Menu.Item>
-                )}
-
-                {/* incident */}
-                {permissionCheck({ Incidents: ["view"] }) && (
-                  <Menu.Item key="incident">
-                    <Link href="/secure/incidents">
-                      <a>
-                        <i className="icon icon-cards-list-view" />
-                        <span>
-                          <IntlMessages id="incidents" />
-                        </span>
-                      </a>
-                    </Link>
-                  </Menu.Item>
-                )}
-
-                {/* Task */}
-                {permissionCheck({ Tasks: ["view"] }) && (
-                  <Menu.Item key="Task">
-                    <Link href="/secure/tasks">
-                      <a>
-                        <i className="icon icon-tasks" />
-                        <span>
-                          <IntlMessages id="task" />
                         </span>
                       </a>
                     </Link>
