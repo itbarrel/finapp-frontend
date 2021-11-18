@@ -58,7 +58,7 @@ const List = memo(() => {
             return (
               <Fragment key={getKey()}>
                 <Col xl={6} lg={8} md={12} sm={12} xs={24} key={form.id}>
-                  <Form name={form.name} description={form.description} type={'formType'} id={form.id} form={form} slug={account} />
+                  <Form name={form.name} description={form.description} type={'formType'} id={form.id} form={form} slug={account} dynamicUrl={true} />
                 </Col>
               </Fragment>
             );

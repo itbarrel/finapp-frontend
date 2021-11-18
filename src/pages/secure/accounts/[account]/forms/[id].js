@@ -32,8 +32,7 @@ const View = memo(() => {
   return (
     <>
       {
-        true &&
-        // selectedForm?.id == formId &&
+        selectedForm?.id == formId &&
         <>
           <Widget>
             <h4>view form</h4>

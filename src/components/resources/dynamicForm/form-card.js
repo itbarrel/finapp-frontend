@@ -10,7 +10,7 @@ import Link from 'next/link'
 import { log } from '../../../utils/console-log'
 import config from '../../../configs'
 
-const DynamicFormCard = memo(({ name, description, type, id, form, slug, editBtn, removeBtn }) => {
+const DynamicFormCard = memo(({ name, description, type, id, form, slug, editBtn, removeBtn, dynamicUrl }) => {
   const dispatch = useDispatch();
   let token = config.dynamicFormToken
 
@@ -27,7 +27,7 @@ const DynamicFormCard = memo(({ name, description, type, id, form, slug, editBtn
         <>
           <ul className="gx-list-inline gx-ml-auto gx-mb-0 gx-text-grey">
             <li>
-              <Link href={`/secure/accounts/${slug}/forms/${id}`} passHref>
+              <Link href={dynamicUrl ? `/secure/accounts/${slug}/forms/${id}` : `/secure/dynamicForm/${id}`} passHref>
                 <EyeOutlined style={{ fontSize: '18px' }} />
               </Link>
             </li>

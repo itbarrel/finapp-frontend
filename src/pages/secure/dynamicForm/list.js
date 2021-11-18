@@ -17,7 +17,6 @@ import Link from "next/link";
 const List = memo(() => {
   const { list } = useSelector(({ resources }) => resources.DynamicForm);
   const formTypes = useSelector(({ resources }) => resources.DynamicForm.formType);
-  const [isLoading] = useState(false);
   const dispatch = useDispatch();
   let token = config.dynamicFormToken
 
@@ -49,15 +48,15 @@ const List = memo(() => {
 
       <Row>
         {
-          !isLoading &&
           list &&
           list.length > 0 &&
-          list.map((form) => {
+          list.map((form, index) => {
             const formType = formTypes?.find((type) => type.id == form.formTypeId)
+            console.log('asdf list', index, form,)
             return (
               <Fragment key={getKey()}>
                 <Col xl={6} lg={8} md={12} sm={12} xs={24} key={form.id}>
-                  <Form name={form.name} description={form.description} type={formType?.name} id={form.id} form={form} editBtn removeBtn />
+                  <Form name={form.name} description={form.description} type={formType?.name} id={form.id} form={form} editBtn removeBtn dynamicUrl={false} />
                 </Col>
               </Fragment>
             );
@@ -65,7 +64,7 @@ const List = memo(() => {
         }
 
         {
-          !isLoading && !list.length && (
+          !list.length && (
             <>
               <Col span={24} align="middle">
                 <NotFound message={<h1>{sNO_RESULT_FOUND_BY}</h1>} />
