@@ -5,9 +5,9 @@ const slice = createSlice({
   name: "dynamicForm",
   initialState: {
     list: [],
-    update_item: [],
-    formType: [],
-    accounts: {},
+    update_item: {},
+    formType: {},
+    accounts: [],
   },
   reducers: {
     all: (state, action) => {
