@@ -78,18 +78,6 @@ const SidebarContent = () => {
                   </a>
                 </Link>
               </Menu.Item>
-
-              {/* incident */}
-              <Menu.Item key={"/secure/dashboard/incidents"}>
-                <Link href="/secure/dashboard/incidents">
-                  <a>
-                    <i className="icon icon-etherium" />
-                    <span>
-                      <IntlMessages id="incidents" />
-                    </span>
-                  </a>
-                </Link>
-              </Menu.Item>
             </MenuItemGroup>
             {/* settings */}
             <MenuItemGroup
