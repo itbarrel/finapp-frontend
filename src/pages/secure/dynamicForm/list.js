@@ -7,6 +7,8 @@ import NotFound from "../../../components/helpers/errors";
 import Form from '../../../components/resources/dynamicForm/form-card'
 import { getKey } from '../../../utils/keyGenerator'
 import { getFormTypesList, getFormTypes } from "../../../store/slices/resources/dynamicForm";
+import { getFormSubmissions } from '../../../store/slices/resources/formSubmissions'
+
 import { log } from '../../../utils/console-log'
 import config from '../../../configs'
 import Widget from "../../../components/Widget";
@@ -15,8 +17,8 @@ import Link from "next/link";
 
 
 const List = memo(() => {
-  const { list } = useSelector(({ resources }) => resources.DynamicForm);
-  const formTypes = useSelector(({ resources }) => resources.DynamicForm.formType);
+  const { list, formTypes } = useSelector(({ resources }) => resources.DynamicForm);
+
   const dispatch = useDispatch();
   let token = config.dynamicFormToken
 
@@ -25,6 +27,7 @@ const List = memo(() => {
     log("Dynamic Form Types List fetch", formTypes)
     dispatch(getFormTypesList(token))
     dispatch(getFormTypes(token))
+    dispatch(getFormSubmissions())
   }, [])
 
   return (
@@ -52,11 +55,10 @@ const List = memo(() => {
           list.length > 0 &&
           list.map((form, index) => {
             const formType = formTypes?.find((type) => type.id == form.formTypeId)
-            console.log('asdf list', index, form,)
             return (
               <Fragment key={getKey()}>
                 <Col xl={6} lg={8} md={12} sm={12} xs={24} key={form.id}>
-                  <Form name={form.name} description={form.description} type={formType?.name} id={form.id} form={form} editBtn removeBtn dynamicUrl={false} />
+                  <Form type={formType?.name} slug={''} form={form} submissions={false} selectedAccount={{}} />
                 </Col>
               </Fragment>
             );

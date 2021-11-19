@@ -16,7 +16,7 @@ import parse from 'html-react-parser';
 
 
 const CreateForm = memo(({ selectedFrom }) => {
-  const formTypes = useSelector(({ resources }) => resources.DynamicForm.formType);
+  const { formTypes } = useSelector(({ resources }) => resources.DynamicForm);
   const [MultipleFormTypeId, setMultipleFormTypeId] = useState()
   const [MultipleFormType, setMultipleFormType] = useState()
   const [fieldType, setFieldType] = useState('');

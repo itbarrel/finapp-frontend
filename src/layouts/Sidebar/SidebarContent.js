@@ -147,7 +147,7 @@ const SidebarContent = () => {
               <MenuItemGroup
                 key="Form"
                 className="gx-menu-group"
-                title={'Form'}
+                title={'Bank Forms'}
               >
                 {
                   accounts?.map((account, index) => {

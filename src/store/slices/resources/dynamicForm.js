@@ -6,7 +6,7 @@ const slice = createSlice({
   initialState: {
     list: [],
     update_item: {},
-    formType: {},
+    formTypes: [],
     accounts: [],
   },
   reducers: {
@@ -28,9 +28,9 @@ const slice = createSlice({
       );
       state.list = update;
     },
-    formType: (state, action) => {
+    setFormTypes: (state, action) => {
       const { payload } = action;
-      state.formType = payload.data;
+      state.formTypes = payload.data;
     },
     current_item: (state, action) => {
       state.update_item = action.payload;
@@ -42,13 +42,14 @@ const slice = createSlice({
   extraReducers: (builder) => {
     builder.addCase(resetAll, (state) => {
       state.list = [];
-      state.update_item = [];
-      state.formType = [];
+      state.update_item = {};
+      state.formTypes = [];
+      state.accounts = [];
     });
   },
 });
 
-export const { all, getAllAccounts, add, update, remove, current_item, formType, failed } = slice.actions;
+export const { all, getAllAccounts, add, update, remove, current_item, setFormTypes, failed } = slice.actions;
 
 export const getFormTypesList = (token) => (dispatch) => {
   return dispatch(
@@ -68,7 +69,7 @@ export const getFormTypes = (token) => (dispatch) => {
       url: "v1/formTypes",
       method: "get",
       token,
-      onSuccess: formType.type,
+      onSuccess: setFormTypes.type,
       onError: failed.type,
     })
   );
@@ -81,7 +82,7 @@ export const createDynamicForm = (data, token) => (dispatch) => {
       method: "post",
       data,
       token,
-      onSuccess: formType.type,
+      onSuccess: setFormTypes.type,
       onError: failed.type,
       notify: true,
     })

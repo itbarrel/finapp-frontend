@@ -1,6 +1,6 @@
 import React, { Fragment, memo, useEffect, useState } from 'react'
 import { useRouter } from 'next/router'
-import { useSelector } from 'react-redux';
+import { useSelector, useDispatch } from 'react-redux';
 import { Form, Input, Button, Checkbox, Select, Col, Radio } from "antd";
 import { validate } from "../../../../../constants/validations";
 import { getKey } from "../../../../../utils/keyGenerator";
@@ -10,23 +10,51 @@ import { log } from '../../../../../utils/console-log'
 import NotFound from "../../../../../components/helpers/errors";
 import { sNO_RESULT_FOUND_BY } from "../../../../../constants/messages";
 import parse from 'html-react-parser';
+import Router from "next/router";
+
+import { submitFormSubmission, getFormSubmission } from "../../../../../store/slices/resources/formSubmissions";
 
 const { Option } = Select;
 
 const View = memo(() => {
+  const dispatch = useDispatch();
   const router = useRouter()
   const { id: formId, account } = router.query
   const list = useSelector(({ resources }) => resources?.DynamicForm?.accounts);
+  const submittedData = useSelector(({ resources }) => resources?.FormSubmission?.item);
+  const loginUser = useSelector(({ auth }) => auth.user);
   const [selectedForm, setSelectedForm] = useState({})
+  const [selectedAccount, setSelectedAccount] = useState({})
+  const [form] = Form.useForm();
 
   useEffect(() => {
     const findAccount = list.find((element) => element.name == account)
     const findForm = findAccount?.Forms.find((form) => form.id == formId)
     setSelectedForm(findForm)
+    setSelectedAccount(findAccount)
+
+    dispatch(getFormSubmission({ formId, userId: loginUser.id }))
   }, [formId, account])
 
+  useEffect(() => {
+    if (submittedData && submittedData.data) {
+      form.setFieldsValue(submittedData.data);
+    }
+  }, [submittedData]);
+
   const onFinish = (formData) => {
-    log("Form Data Submit", formData);
+    const dataToSubmit = {
+      formId,
+      userId: loginUser.id,
+      data: formData
+    }
+    dispatch(submitFormSubmission(dataToSubmit))
+    form.resetFields();
+    back();
+  };
+
+  const back = () => {
+    Router.push(`/secure/accounts/${account}/forms`);
   };
 
   return (
@@ -35,14 +63,14 @@ const View = memo(() => {
         selectedForm?.id == formId &&
         <>
           <Widget>
-            <h4>view form</h4>
+            <h4>{selectedForm.name || ''} Form Submission - {selectedAccount.name || ''}</h4>
           </Widget>
-          <Form onFinish={onFinish} scrollToFirstError layout={"vertical"}>
+          <Form onFinish={onFinish} form={form} scrollToFirstError layout={"vertical"}>
             <Widget styleName={"gx-card-widget"} >
               <p className="gx-text-grey gx-fs-xl "> {selectedForm.name} - {selectedForm.type} </p>
               <p className="gx-text-grey gx-fs-md gx-mb-4">{selectedForm.description} </p>
               {
-                selectedForm?.fields?.map((data, index) => {
+                selectedForm?.fields && selectedForm?.fields.length > 0 && selectedForm?.fields?.map((data, index) => {
                   const { label, label_input, isInput, isLabel, isDescription, isEncryption, input_type, options, ckeditor, model, description } = data
                   const SelectedTextFieldType = {
                     text_field: <Input hidden={isInput ? false : true} />,
@@ -81,7 +109,7 @@ const View = memo(() => {
                   return (
                     <Fragment key={getKey()}>
                       <Form.Item
-                        name={model} // label
+                        name={model}
                         label={isLabel ? label : ''}
                       >
                         {SelectedTextFieldType[input_type]}
@@ -95,6 +123,9 @@ const View = memo(() => {
               {
                 selectedForm?.fields &&
                 <Form.Item>
+                  <Button type="info" className="gx-ml-3" onClick={back}>
+                    Return
+                  </Button>
                   <Button type="primary" htmlType="submit" className="gx-ml-3">
                     Submit
                   </Button>
