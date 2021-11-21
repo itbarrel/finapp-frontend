@@ -154,11 +154,12 @@ const CreateForm = memo(({ selectedFrom }) => {
                     hasFeedback
                     name="public"
                     className="gx-mx-0 gx-my-1"
-                    rules={validateDynamicForm.visibility}
+                    initialValue={true}
+                  // rules={validateDynamicForm.visibility}
                   >
                     <Select allowClear>
                       {
-                        [{ name: 'Public', value: 'true' }, { name: 'Private', value: 'false' }]?.map((form) => {
+                        [{ name: 'Public', value: true }, { name: 'Private', value: false }]?.map((form) => {
                           return (
                             <Option key={getKey()} value={form.value}>
                               {form.name}

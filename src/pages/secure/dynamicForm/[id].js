@@ -74,12 +74,19 @@ const View = memo(() => {
                   };
                   return (
                     <Fragment key={getKey()}>
-                      <Form.Item
-                        name={model} // label
-                        label={isLabel ? label : ''}
-                      >
-                        {SelectedTextFieldType[input_type]}
-                      </Form.Item>
+                      {isLabel ? label : ''}
+                      {
+                        isInput && (
+                          <>
+                            <Form.Item
+                              name={model} // label
+                            // label={isLabel ? label : ''}
+                            >
+                              {SelectedTextFieldType[input_type]}
+                            </Form.Item>
+                          </>
+                        )
+                      }
                       {(isDescription && description) && (parse(parse(description)))}
                     </Fragment>
                   )
