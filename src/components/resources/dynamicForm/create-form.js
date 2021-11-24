@@ -12,8 +12,7 @@ import config from '../../../configs'
 import Router from "next/router";
 // import { CKEditor } from '@ckeditor/ckeditor5-react/dist/ckeditor';
 // import ClassicEditor from '@ckeditor/ckeditor5-build-classic';
-import parse from 'html-react-parser';
-
+import Link from "next/link";
 
 const CreateForm = memo(({ selectedFrom }) => {
   const { formTypes } = useSelector(({ resources }) => resources.DynamicForm);
@@ -390,13 +389,18 @@ const CreateForm = memo(({ selectedFrom }) => {
             </Form.List>
 
             <Form.Item>
+              <Link href="/secure/dynamicForm/list" passHref>
+                <Button type="info" key="back">
+                  Return
+                </Button>
+              </Link>
               <Button type="primary" htmlType="submit" className="gx-ml-3">
                 {selectedFrom ? "Update Form" : 'Submit'}
               </Button>
             </Form.Item>
           </Form>
         </Form.Provider>
-      </Col >
+      </Col>
     </>
   );
 });

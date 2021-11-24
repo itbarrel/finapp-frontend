@@ -27,8 +27,8 @@ const List = memo(() => {
   const [selected, setSelected] = useState(list.find((elem) => elem.name == account))
 
   useEffect(() => {
-    dispatch(getFormSubmissions({ userId: loginUser.id }))
-    dispatch(getCompletedFormSubmissions({ userId: loginUser.id, status: 'completed' }))
+    dispatch(getFormSubmissions({ parentId: loginUser.id }))
+    dispatch(getCompletedFormSubmissions({ parentId: loginUser.id, status: 'completed' }))
 
     // dispatch(getFormTypesList(token))
     // dispatch(getFormTypes(token))

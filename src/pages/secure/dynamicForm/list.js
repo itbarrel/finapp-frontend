@@ -15,7 +15,6 @@ import Widget from "../../../components/Widget";
 import { PlusCircleOutlined } from "@ant-design/icons";
 import Link from "next/link";
 
-
 const List = memo(() => {
   const { list, formTypes } = useSelector(({ resources }) => resources.DynamicForm);
 

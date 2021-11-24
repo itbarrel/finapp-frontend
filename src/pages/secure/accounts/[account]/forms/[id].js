@@ -33,7 +33,7 @@ const View = memo(() => {
     setSelectedForm(findForm)
     setSelectedAccount(findAccount)
 
-    dispatch(getFormSubmission({ formId, userId: loginUser.id }))
+    dispatch(getFormSubmission({ formId, parentId: loginUser.id }))
   }, [formId, account])
 
   useEffect(() => {
@@ -45,7 +45,7 @@ const View = memo(() => {
   const onFinish = (formData) => {
     const dataToSubmit = {
       formId,
-      userId: loginUser.id,
+      parentId: loginUser.id,
       data: formData
     }
     dispatch(submitFormSubmission(dataToSubmit))
@@ -114,7 +114,7 @@ const View = memo(() => {
                       >
                         {SelectedTextFieldType[input_type]}
                       </Form.Item>
-                      {(isDescription && description) && (parse(parse(description)))}
+                      {(isDescription && description) && (parse(description))}
                     </Fragment>
                   )
                 })

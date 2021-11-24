@@ -87,7 +87,7 @@ const View = memo(() => {
                           </>
                         )
                       }
-                      {(isDescription && description) && (parse(parse(description)))}
+                      {(isDescription && description) && (parse(description))}
                     </Fragment>
                   )
                 })

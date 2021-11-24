@@ -30,17 +30,17 @@ const DynamicFormCard = memo(({ type, form, slug, submissions, selectedAccount =
   }
 
   const isSubmitted = (formId) => {
-    return formSubmissions.filter((fs) => { return fs.userId === loginUser.id && fs.formId === formId }).length > 0
+    return formSubmissions.filter((fs) => { return fs.parentId === loginUser.id && fs.formId === formId }).length > 0
   }
 
   const isCompleted = (formId) => {
-    return completedFormSubmissions.filter((fs) => { return fs.userId === loginUser.id && fs.formId === formId }).length > 0
+    return completedFormSubmissions.filter((fs) => { return fs.parentId === loginUser.id && fs.formId === formId }).length > 0
   }
 
   const onCompleteDocument = () => {
     const dataToSubmit = {
       formId: id,
-      userId: loginUser.id,
+      parentId: loginUser.id,
       dynamicFormAccountId: selectedAccount.id
     }
     dispatch(completeFormSubmission(dataToSubmit))

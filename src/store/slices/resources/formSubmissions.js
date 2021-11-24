@@ -33,7 +33,7 @@ const slice = createSlice({
         complete: (state, action) => {
             const { payload } = action
             state.completed.push(payload)
-            state.list = state.list.filter((fs) => (fs.userId !== payload.userId && fs.formId !== payload.formId));
+            state.list = state.list.filter((fs) => (fs.parentId !== payload.parentId && fs.formId !== payload.formId));
         },
         current_item: (state, action) => {
             state.update_item = action.payload;
