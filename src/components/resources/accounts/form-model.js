@@ -237,5 +237,5 @@ const Model = memo(() => {
   );
 });
 
-Modal.displayName = Modal;
+Model.displayName = Model;
 export default Model;

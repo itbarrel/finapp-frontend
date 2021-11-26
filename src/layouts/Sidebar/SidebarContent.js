@@ -100,6 +100,7 @@ const SidebarContent = () => {
                   </Link>
                 </Menu.Item>
               )}
+
               {/* Users */}
               {permissionCheck({ Users: ["view"] }) && (
                 <Menu.Item key="users">
@@ -113,6 +114,7 @@ const SidebarContent = () => {
                   </Link>
                 </Menu.Item>
               )}
+
               {/* roles */}
               {permissionCheck({ Roles: ["view"] }) && (
                 <Menu.Item key="roles">

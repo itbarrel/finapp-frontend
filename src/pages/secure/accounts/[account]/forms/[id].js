@@ -21,11 +21,18 @@ const View = memo(() => {
   const router = useRouter()
   const { id: formId, account } = router.query
   const list = useSelector(({ resources }) => resources?.DynamicForm?.accounts);
-  const submittedData = useSelector(({ resources }) => resources?.FormSubmission?.item);
+  const { item: submittedData, completed: completedFormSubmissions } = useSelector(({ resources }) => resources?.FormSubmission);
+
   const loginUser = useSelector(({ auth }) => auth.user);
   const [selectedForm, setSelectedForm] = useState({})
   const [selectedAccount, setSelectedAccount] = useState({})
   const [form] = Form.useForm();
+
+  const isCompleted = (formId) => {
+    return completedFormSubmissions.filter((fs) => { return fs.parentId === loginUser.id && fs.formId === formId }).length > 0
+  }
+
+  const isNotCompleted = !isCompleted(formId)
 
   useEffect(() => {
     const findAccount = list.find((element) => element.name == account)
@@ -65,7 +72,7 @@ const View = memo(() => {
           <Widget>
             <h4>{selectedForm.name || ''} Form Submission - {selectedAccount.name || ''}</h4>
           </Widget>
-          <Form onFinish={onFinish} form={form} scrollToFirstError layout={"vertical"}>
+          <Form onFinish={onFinish} form={form} scrollToFirstError layout={"vertical"} >
             <Widget styleName={"gx-card-widget"} >
               <p className="gx-text-grey gx-fs-xl "> {selectedForm.name} - {selectedForm.type} </p>
               <p className="gx-text-grey gx-fs-md gx-mb-4">{selectedForm.description} </p>
@@ -126,9 +133,11 @@ const View = memo(() => {
                   <Button type="info" className="gx-ml-3" onClick={back}>
                     Return
                   </Button>
-                  <Button type="primary" htmlType="submit" className="gx-ml-3">
-                    Submit
-                  </Button>
+                  {isNotCompleted &&
+                    <Button type="primary" htmlType="submit" className="gx-ml-3">
+                      Submit
+                    </Button>
+                  }
                 </Form.Item>
               }
             </Widget>

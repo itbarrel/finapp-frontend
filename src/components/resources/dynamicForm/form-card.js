@@ -72,7 +72,7 @@ const DynamicFormCard = memo(({ type, form, slug, submissions, selectedAccount =
             }
             {
               !submissions && <li>
-                <Link href={`/secure/dynamicForm/edit/${id}`} passHref>
+                <Link href={`/secure/dynamicForm/${id}/edit`} passHref>
                   <EditOutlined style={{ fontSize: '18px' }} />
                 </Link>
               </li>
@@ -95,12 +95,23 @@ const DynamicFormCard = memo(({ type, form, slug, submissions, selectedAccount =
       text={type}
     >
       {ifCompleted &&
-        <span className="gx-widget-badge" style={{ backgroundColor: 'cornflowerblue' }}>Completed</span>
+        <span className="gx-widget-badge" style={{ backgroundColor: 'black' }}>
+          <Link href={submissions ? `/secure/accounts/${slug}/forms/${id}` : `/secure/dynamicForm/${id}`} passHref>
+            Completed
+          </Link>
+        </span>
       }
       <h2 className="gx-mb-1">{name}</h2>
       <p className="gx-text-grey gx-fs-sm "> <strong>Description: </strong> {description}</p>
       {!submissions &&
-        <p className="gx-text-grey gx-fs-sm "> <strong>Submissions: </strong> {getSubmissionCount(id)}</p>
+        <p style={{ cursor: 'pointer' }}>
+          <Link href={`/secure/dynamicForm/${id}/details`} passHref>
+            <span>
+              <strong>Submissions: </strong>
+              {getSubmissionCount(id)}
+            </span>
+          </Link>
+        </p>
       }
       <div className="gx-text-center gx-pt-sm-3">
         {ifSubmitted &&

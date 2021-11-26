@@ -17,16 +17,19 @@ import Link from "next/link";
 
 const List = memo(() => {
   const { list, formTypes } = useSelector(({ resources }) => resources.DynamicForm);
+  const domain = useSelector(({ auth }) => auth.domain);
 
   const dispatch = useDispatch();
   let token = config.dynamicFormToken
 
   useEffect(() => {
+    console.log(domain)
     log("Dynamic Form list fetch", list)
     log("Dynamic Form Types List fetch", formTypes)
     dispatch(getFormTypesList(token))
     dispatch(getFormTypes(token))
-    dispatch(getFormSubmissions())
+    const query = (domain && domain.type == 'Bank') ? { externalUser: true } : {}
+    dispatch(getFormSubmissions(query))
   }, [])
 
   return (
@@ -36,7 +39,7 @@ const List = memo(() => {
           <div>
             <h3 className='gx-my-0 gx-mt-2 gx-ml-2'>Dynamic Form List</h3>
           </div>
-          <Link href="/secure/dynamicForm/create-form" passHref>
+          <Link href="/secure/dynamicForm/new" passHref>
             <Button
               type={'primary'}
               icon={<PlusCircleOutlined />}
