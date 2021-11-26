@@ -51,8 +51,8 @@ const Detail = memo(({ selectedFrom }) => {
     if (thisFormSubmissions && thisFormSubmissions.length > 0) {
         thisFormSubmissions.map(detail => {
             tableRows.push({
-                user_name: detail.ExternalUser.userName,
-                domain_name: detail.ExternalUser.tenantName,
+                user_name: (detail?.ExternalUser && detail?.ExternalUser.userName) || '',
+                domain_name: (detail?.ExternalUser && detail?.ExternalUser.tenantName) || '',
                 ...detail.data
             })
         })
