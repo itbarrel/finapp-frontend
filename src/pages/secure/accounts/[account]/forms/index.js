@@ -24,7 +24,7 @@ const List = memo(() => {
   let token = config.dynamicFormToken
   const router = useRouter()
   const { account } = router.query
-  const [selected, setSelected] = useState(list.find((elem) => elem.name == account))
+  const [selected, setSelected] = useState({})
 
   useEffect(() => {
     dispatch(getFormSubmissions({ parentId: loginUser.id }))
@@ -33,6 +33,10 @@ const List = memo(() => {
     // dispatch(getFormTypesList(token))
     // dispatch(getFormTypes(token))
   }, [])
+
+  useEffect(() => {
+    setSelected(list.find((elem) => elem.name == account))
+  }, [account])
 
   return (
     <>
@@ -47,8 +51,9 @@ const List = memo(() => {
       <Row>
         {
           selected &&
-          selected?.Forms.length > 0 &&
-          selected?.Forms.map((form) => {
+          selected.Forms &&
+          selected.Forms.length > 0 &&
+          selected.Forms.map((form) => {
             return (
               <Fragment key={getKey()}>
                 <Col xl={6} lg={8} md={12} sm={12} xs={24} key={form.id}>
