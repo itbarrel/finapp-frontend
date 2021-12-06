@@ -13,3 +13,7 @@ export const logout = () => {
   window.localStorage.setItem("logout", Date.now());
   Router.push("/");
 };
+
+export const signup = () => {
+  Router.push("/auth/login");
+};

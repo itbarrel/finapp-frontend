@@ -1,6 +1,6 @@
 import { createSlice } from "@reduxjs/toolkit";
 import { apiCallBegan, resetAll } from "../apiActions";
-import { login as _login, logout as _logout } from "../../services/Auth";
+import { login as _login, logout as _logout, signup as _signup } from "../../services/Auth";
 import { CHANGE_PASSWORD, UPDATE_PROFILE } from "../../constants/loaderKeys";
 
 const slice = createSlice({
@@ -18,6 +18,11 @@ const slice = createSlice({
   reducers: {
     start: (state) => {
       return state;
+    },
+    signUp: (state) => {
+      state.loader = false;
+      state.hasErrors = false;
+      _signup();
     },
     login: (state, action) => {
       const { token, user, permissions, domain } = action.payload;
@@ -65,7 +70,7 @@ const slice = createSlice({
 
 export const {
   start,
-  getAllAccounts,
+  signUp,
   login,
   logout,
   update,
@@ -157,6 +162,18 @@ export const confirmLogin = () => (dispatch) => {
   );
 };
 
+export const onSignUp = (data) => (dispatch) => {
+  return dispatch(
+    apiCallBegan({
+      url: "v1/customers",
+      method: "post",
+      data,
+      onSuccess: signUp.type,
+      onError: failed.type,
+      notify: true,
+    })
+  );
+};
 
 export const onLogOut = () => (dispatch) => {
   dispatch(logout());
