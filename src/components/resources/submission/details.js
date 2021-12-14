@@ -24,7 +24,7 @@ const Detail = memo(({ selectedFrom }) => {
             const { parentId, formId, id } = data
             const dataToSubmit = {
                 layoutId: e.key,
-                userId, formId, id
+                parentId, formId, id
             }
             dispatch(printLayout(dataToSubmit))
         }
