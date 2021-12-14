@@ -1,6 +1,7 @@
 import * as actions from "../apiActions";
 import apiClient from "../../services/ApiClient";
 import { log } from "../../utils/console-log";
+import { pdfDownloader } from "../../utils/pdfDownloader";
 import { notification } from "antd";
 import { onLogOut } from "../../store/slices/auth";
 import { loading } from "../../store/slices/loader";
@@ -37,6 +38,10 @@ const api =
     apiClient
       .doRequest(method, url, data)
       .then((response) => {
+        if (response.type == 'application/pdf') {
+          pdfDownloader(response)
+          response = { message: "Pdf ddownloaded successfully" }
+        }
         // General
         log("API Call == Response ", response);
         if (notify) {

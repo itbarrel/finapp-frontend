@@ -214,6 +214,16 @@ const CreateForm = memo(({ selectedFrom }) => {
                                 />
 
                                 <Form.Item
+                                  name={[name, "index"]}
+                                  fieldKey={[fieldKey, 'index']}
+                                  className="gx-m-1"
+                                  style={{ width: "99%" }}
+                                  initialValue={index}
+                                  hidden
+                                  {...field}
+                                />
+
+                                <Form.Item
                                   name={[name, "label"]}
                                   fieldKey={[fieldKey, 'label']}
                                   rules={validateDynamicForm.field.label}
@@ -261,7 +271,7 @@ const CreateForm = memo(({ selectedFrom }) => {
                                             <Fragment key={getKey()}>
                                               <Row>
                                                 {fields.map(({ key, name, fieldKey, ...field }) => (
-                                                  <Col xl={12} lg={12} md={24} sm={24} xs={24}>
+                                                  <Col xl={12} lg={12} md={24} sm={24} xs={24} key={key}>
                                                     <Form.Item required={false} fieldKey={[fieldKey, `${fieldType}Fields`]} >
                                                       <Widget
                                                         styleName={
@@ -342,9 +352,9 @@ const CreateForm = memo(({ selectedFrom }) => {
                                 <h4 className={'gx-mx-2'}>Please select which property will show or hide</h4>
                                 <div className='gx-d-flex gx-text-nowrap'>
                                   {
-                                    switchButtons.map((item) => {
+                                    switchButtons.map((item, buttonIndex) => {
                                       return (
-                                        <Fragment>
+                                        <Fragment key={buttonIndex}>
                                           <div className={'gx-flex gx-mx-4'}>
                                             <Form.Item
                                               name={[name, item.name]}

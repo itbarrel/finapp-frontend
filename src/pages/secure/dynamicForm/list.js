@@ -23,7 +23,6 @@ const List = memo(() => {
   let token = config.dynamicFormToken
 
   useEffect(() => {
-    console.log(domain)
     log("Dynamic Form list fetch", list)
     log("Dynamic Form Types List fetch", formTypes)
     dispatch(getFormTypesList(token))

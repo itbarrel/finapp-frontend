@@ -11,19 +11,7 @@ const EditForm = memo(() => {
   const [selectedFrom] = useState(FormList.find((form) => form.id == id))
 
   return (
-    <>
-      <EditDynamicForm selectedFrom={selectedFrom} />
-
-      {/* {
-        selectedFrom?.id != formId && (
-          <>
-            <Col span={24} align="middle">
-              <NotFound message={<h1>{sNO_RESULT_FOUND_BY}</h1>} />
-            </Col>
-          </>
-        )
-      } */}
-    </>
+    <EditDynamicForm selectedFrom={selectedFrom} />
   )
 })
 

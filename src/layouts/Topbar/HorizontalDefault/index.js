@@ -41,8 +41,6 @@ const HorizontalDefault = () => {
   // const locale = useSelector((state) => state);
   const navCollapsed = useSelector(({ ui }) => ui.settings.navCollapsed);
 
-  console.log("locale", locale);
-
   const languageMenu = () => (
     <CustomScrollbars className="gx-popover-lang-scroll">
       <ul className="gx-sub-popover">
@@ -88,7 +86,6 @@ const HorizontalDefault = () => {
               <i
                 className="gx-icon-btn icon icon-menu"
                 onClick={() => {
-                  console.log("navCollapsed", !navCollapsed);
                   dispatch(toggleCollapsedSideNav(!navCollapsed));
                 }}
               />

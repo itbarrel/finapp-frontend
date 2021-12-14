@@ -22,9 +22,7 @@ const slice = createSlice({
         getSingle: (state, action) => {
             state.item = action.payload;
         },
-        update: (state, action) => {
-            console.log('update dynamic form store', action)
-        },
+        update: (state, action) => { },
         remove: (state, action) => {
             // eslint-disable-next-line no-negated-condition
             const update = state.list.filter((user) => (user.id !== state.update_item?.id ? user : null));
