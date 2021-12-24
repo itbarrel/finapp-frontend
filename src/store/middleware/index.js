@@ -16,10 +16,11 @@ import { ReduxApiClient } from "../rtk-query";
 const middleware = () => {
   return [
     ...getDefaultMiddleware({
-      serializableCheck: {
-        /* ignore persistance actions */
-        ignoredActions: [FLUSH, REHYDRATE, PAUSE, PERSIST, PURGE, REGISTER],
-      },
+      serializableCheck: false
+      // serializableCheck: {
+      //   /* ignore persistance actions */
+      //   ignoredActions: [FLUSH, REHYDRATE, PAUSE, PERSIST, PURGE, REGISTER],
+      // },
     }),
     toast,
     api,

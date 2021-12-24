@@ -7,7 +7,8 @@ import {
   Incidents,
   Task,
   DynamicForm,
-  FormSubmission
+  FormSubmission,
+  Layout
 } from "../slices/resources";
 
 export default combineReducers({
@@ -18,5 +19,6 @@ export default combineReducers({
   Incidents,
   Task,
   DynamicForm,
-  FormSubmission
+  FormSubmission,
+  Layout
 });

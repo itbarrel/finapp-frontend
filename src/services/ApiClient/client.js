@@ -62,6 +62,9 @@ export default class ApiClient {
       case "postFormData":
         return this.postFormData(path, data, token, headers);
 
+      case "putFormData":
+        return this.putFormData(path, data, token, headers);
+
       case "patch":
       case "PATCH":
         // request;
@@ -81,6 +84,8 @@ export default class ApiClient {
   }
 
   get(path, data, token, headers = {}) {
+
+    console.log("12345678");
     const url = withQuery(this.apiUrl + path, data);
     const updatedHeaders = { ...this.config.headers, ...headers }
     const config = { ...this.config, method: "GET", headers: updatedHeaders };
@@ -118,13 +123,40 @@ export default class ApiClient {
     const config = { ...this.config, method: "PUT", body: json, headers: updatedHeaders };
     return this.makeRequest(url, config, token);
   }
+  putFormData(path, data, token, headers = {}) {
+    console.log("987654321");
+    const url = this.apiUrl + path;
+    const updatedHeaders = { ...this.config.headers, ...{ "Content-Type": "application/form-data" } }
+
+    var formData = new FormData()
+    console.log('>>>>>..111', data);
+    Object.keys(data).map(key => {
+      console.log('>>>>>..', key);
+      formData.append(key, data[key])
+    })
+    console.log(">>>>>>>>>>>>>>>>.....", formData)
+
+    const config = { method: "PUT", body: formData };
+    return this.makeRequest(url, config, token);
+  }
 
   postFormData(path, data, token, headers = {}) {
     const url = this.apiUrl + path;
-    const updatedHeaders = { ...this.config.headers, ...headers }
-    const config = { method: "POST", body: data, headers: updatedHeaders };
+    const updatedHeaders = { ...this.config.headers, ...{ "Content-Type": "application/form-data" } }
+
+    var formData = new FormData()
+    console.log('>>>>>..', data);
+    Object.keys(data).map(key => {
+      console.log('>>>>>..', key);
+      formData.append(key, data[key])
+    })
+    console.log(">>>>>>>>>>>>>>>>.....", formData)
+
+    const config = { method: "POST", body: formData };
     return this.makeRequest(url, config, token);
   }
+
+
 
   makeRequest(url, config, token) {
     const { headers } = config;

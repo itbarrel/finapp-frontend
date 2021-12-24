@@ -367,5 +367,8 @@
   "Form.Description": "Form Description",
   "Form.Type": "Form Type",
   "form.list": "Form List",
-  "sample": "sample"
+  "sample": "sample",
+  "layout": "Layout",
+  "layouts": "Layouts",
+  "Upload.File": "Upload File"
 }

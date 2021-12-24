@@ -1,6 +1,6 @@
 import { memo } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { EyeOutlined, EditOutlined, DeleteOutlined, CheckCircleTwoTone } from "@ant-design/icons";
+import { EyeOutlined, EditOutlined, DeleteOutlined, CheckCircleTwoTone, LayoutOutlined } from "@ant-design/icons";
 import { Popconfirm } from "antd";
 import PropTypes from "prop-types";
 import IntlMessages from "../../../utils/IntlMessages";
@@ -58,6 +58,13 @@ const DynamicFormCard = memo(({ type, form, slug, submissions, selectedAccount =
       extra={
         <>
           <ul className="gx-list-inline gx-ml-auto gx-mb-0 gx-text-grey">
+            {
+              !submissions && <li>
+                <Link href={`/secure/dynamicForm/${id}/layouts`} passHref>
+                  <LayoutOutlined style={{ fontSize: '18px' }} />
+                </Link>
+              </li>
+            }
             {ifNotCompleted &&
               <li>
                 <Link href={submissions ? `/secure/accounts/${slug}/forms/${id}` : `/secure/dynamicForm/${id}`} passHref>
