@@ -64,10 +64,10 @@ const LayoutModal = memo(({ visible, setVisible, selectedLayout, title, off }) =
 
         // console.log('>>>>>>>>....', files, { name, file })
         if (visible && selectedLayout) {
-            dispatch(updateLayout(selectedLayout.id, formData));
+            dispatch(updateLayout(selectedLayout.id, { name, files: originFileObj, formId: id }));
         } else {
 
-            dispatch(addLayout({ name, file: originFileObj, formId: id }));
+            dispatch(addLayout({ name, files: originFileObj, formId: id }));
         }
         form.resetFields();
     };
@@ -193,8 +193,8 @@ const LayoutModal = memo(({ visible, setVisible, selectedLayout, title, off }) =
                         name="file"
                         label={
                             <LabelAndTooltip
-                                title={"Upload.File"}
-                                tooltip={"Upload File"}
+                                title={"Upload.Files"}
+                                tooltip={"Upload Files"}
                             />
                         }
                     >

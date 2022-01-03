@@ -16,7 +16,6 @@ import { useRouter } from 'next/router'
 const LayoutTable = memo(() => {
     const dispatch = useDispatch();
     const { list } = useSelector(({ resources }) => resources.Layout);
-    console.log(":////", list);
     const loader = useSelector(({ resources }) => resources.Layout.loading);
     const totalItems = useSelector(({ resources }) => resources.Layout.total_items);
     const [loading] = useState(loader);
@@ -38,7 +37,7 @@ const LayoutTable = memo(() => {
 
     const [tableSetting] = useState({
         bordered: true,
-        loading: loading,
+        // loading: loading,
         pagination,
         size: "small",
         expandedRowRender: false,
@@ -102,7 +101,7 @@ const LayoutTable = memo(() => {
                         onClick={() => handleUpdate(record)}
                     />
                     <Popconfirm
-                        title="Are you sure delete this User?"
+                        title="Are you sure delete this Layout?"
                         okText="Yes"
                         cancelText="No"
                         onConfirm={() => handleDelete(record)}
