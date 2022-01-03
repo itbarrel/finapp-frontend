@@ -29,7 +29,7 @@ const handleError = (error) => {
     logout();
   }
   if (error.response.status === 403) {
-    Router.push("/secure/dashboard");
+    Router.push("/secure/dashboard/main");
   }
   return Promise.reject(error);
 };
@@ -142,21 +142,22 @@ export default class ApiClient {
 
   postFormData(path, data, token, headers = {}) {
     const url = this.apiUrl + path;
-    const updatedHeaders = { ...this.config.headers, ...{ "Content-Type": "application/form-data" } }
+    const updatedHeaders = { ...this.config.headers, ...{ "Content-Type": "multipart/form-data" } }
 
     var formData = new FormData()
-    console.log('>>>>>..', data);
     Object.keys(data).map(key => {
-      console.log('>>>>>..', key);
-      formData.append(key, data[key])
+      if (data[key] && Array.isArray(data[key])){
+        data[key].map((elem, index) => {
+          formData.append(`${key}`, elem)
+        })
+      }else{
+        formData.append(key, data[key])
+      }
     })
-    console.log(">>>>>>>>>>>>>>>>.....", formData)
 
     const config = { method: "POST", body: formData };
     return this.makeRequest(url, config, token);
   }
-
-
 
   makeRequest(url, config, token) {
     const { headers } = config;

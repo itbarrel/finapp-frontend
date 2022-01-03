@@ -23,7 +23,7 @@ const handleError = (error) => {
     logout();
   }
   if (error.response.status === 403) {
-    Router.push("/secure/dashboard");
+    Router.push("/secure/dashboard/main");
   }
   return Promise.reject(error);
 };

@@ -370,5 +370,6 @@
   "sample": "sample",
   "layout": "Layout",
   "layouts": "Layouts",
-  "Upload.File": "Upload File"
+  "Upload.File": "Upload File",
+  "Upload.Files": "Upload Files"
 }

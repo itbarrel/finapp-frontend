@@ -87,7 +87,7 @@ const LayoutTable = memo(() => {
             dataIndex: "active",
             key: "active",
             width: 120,
-            render: (text) => <span className="gx-link">{text ? "Yes" : "No"}</span>,
+            render: (text) => <span className="gx-link">{text ? "Active" : "Inactive"}</span>,
         },
         {
             title: "Action",
@@ -95,19 +95,23 @@ const LayoutTable = memo(() => {
             width: 360,
             render: (text, record) => (
                 <>
-                    <Button
-                        size="large"
-                        icon={<EditOutlined />}
-                        onClick={() => handleUpdate(record)}
-                    />
-                    <Popconfirm
-                        title="Are you sure delete this Layout?"
-                        okText="Yes"
-                        cancelText="No"
-                        onConfirm={() => handleDelete(record)}
-                    >
-                        <Button size="default" icon={<DeleteOutlined />} />
-                    </Popconfirm>
+                    {!(record.id == 0) && (
+                        <Button
+                            size="large"
+                            icon={<EditOutlined />}
+                            onClick={() => handleUpdate(record)}
+                        />
+                    )}
+                    {!(record.id == 0) && (
+                        <Popconfirm
+                            title="Are you sure delete this Layout?"
+                            okText="Yes"
+                            cancelText="No"
+                            onConfirm={() => handleDelete(record)}
+                        >
+                            <Button size="default" icon={<DeleteOutlined />} />
+                        </Popconfirm>
+                    )}
                 </>
             ),
         },

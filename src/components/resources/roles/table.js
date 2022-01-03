@@ -70,7 +70,7 @@ const Role = memo(({ setVisible, setTitle }) => {
       title: "Action",
       key: "action",
       width: 80,
-      render: (record,) => (
+      render: (record) => (
         <>
           {loginUser && loginUser.RoleId !== record.id && (
             <Button

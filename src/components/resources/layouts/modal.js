@@ -54,20 +54,18 @@ const LayoutModal = memo(({ visible, setVisible, selectedLayout, title, off }) =
     };
     const onSubmit = async (u) => {
         setLoading(true);
-        const files = u.target.files
 
         const formData = await form.validateFields();
-        const { name, file } = formData
-        const { file: fileData } = file
-        const { originFileObj } = fileData
+        console.log('>>>>>>>>....', files, formData)
+        const { name, files } = formData
+        const { fileList } = files
 
+        const fileObjects = fileList.map(file => file.originFileObj)
 
-        // console.log('>>>>>>>>....', files, { name, file })
         if (visible && selectedLayout) {
-            dispatch(updateLayout(selectedLayout.id, { name, files: originFileObj, formId: id }));
+            dispatch(updateLayout(selectedLayout.id, { name, files: fileObjects, formId: id }));
         } else {
-
-            dispatch(addLayout({ name, files: originFileObj, formId: id }));
+            dispatch(addLayout({ name, files: fileObjects, formId: id }));
         }
         form.resetFields();
     };
@@ -190,7 +188,7 @@ const LayoutModal = memo(({ visible, setVisible, selectedLayout, title, off }) =
 
 
                     <Form.Item
-                        name="file"
+                        name="files"
                         label={
                             <LabelAndTooltip
                                 title={"Upload.Files"}
@@ -198,7 +196,7 @@ const LayoutModal = memo(({ visible, setVisible, selectedLayout, title, off }) =
                             />
                         }
                     >
-                        <Upload value="">
+                        <Upload multiple={true}>
                             <Button icon={<UploadOutlined />}>Upload</Button>
                         </Upload>
                     </Form.Item>
