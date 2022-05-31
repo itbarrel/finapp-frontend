@@ -304,5 +304,8 @@
   "sidebar.map.weather": "Carte météorologique",
   "sidebar.extensions.shuffle": "Mélanger",
   "sidebar.extensions.profile": "Profil",
-  "sidebar.social": "Applications sociales"
+  "sidebar.social": "Applications sociales",
+  "layout": "Layout",
+  "layouts": "Layouts",
+  "Upload.File": "Upload File"
 }

@@ -48,6 +48,7 @@
   "Incident.Name": "Naam incident",
   "Department.Name": "Afdelingsnaam",
   "sure.for.delete": "Weet je zeker dat je dit verwijdert?",
+  "sure.for.complete": "Weet je zeker dat je complete verwijdert?",
   "Yes": "Ja",
   "yes": "ja",
   "No": "Nee",
@@ -58,5 +59,6 @@
   "Form.Description": "Formulierbeschrijvings",
   "Form.Type": "Formuliertype:",
   "form.list": "Formulierenlijst",
-  "sample": "sample"
+  "sample": "sample",
+  "layout": "lay-out"
 }

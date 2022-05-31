@@ -147,7 +147,7 @@
   "app.userAuth.signIn": "Sign In",
   "app.userAuth.send": "SEND",
   "app.userAuth.bySigning": "By Signing Up, you can avail full features of our services.",
-  "app.userAuth.or": "or ",
+  "app.userAuth.or": " or ",
   "app.userAuth.forgotPassword": "Forgot Password",
   "app.userAuth.forgot": "Don't worry. Recovering the password is easy.Just tell us the email you have registered",
   "app.userAuth.signUp": "Sign Up",
@@ -169,7 +169,7 @@
   "appModule.hvAccount": "Have an account",
   "appModule.createAccount": "Create an account",
   "appModule.termAndCondition": "Term & Condition",
-  "appModule.iAccept": "by signing up, I accept",
+  "appModule.iAccept": "by signing in, I accept",
   "todo": "To-Do",
   "todo.addTask": "ADD TASK",
   "todo.all": "All",
@@ -355,7 +355,8 @@
   "Task.Name": "Task Name",
   "Incident.Name": "Incident Name",
   "Department.Name": "Department Name",
-  "sure.for.delete": "Are you sure delete this",
+  "sure.for.delete": "Are you sure to delete this",
+  "sure.for.complete": "Are you sure to complete this",
   "Yes": "Yes",
   "yes": "yes",
   "No": "No",
@@ -366,5 +367,8 @@
   "Form.Description": "Form Description",
   "Form.Type": "Form Type",
   "form.list": "Form List",
-  "sample": "sample"
+  "sample": "sample",
+  "layout": "Layout",
+  "layouts": "Layouts",
+  "Upload.File": "Upload File"
 }

@@ -8,6 +8,20 @@ export const validate = {
       whitespace: true,
     },
   ],
+  name: (name) => [
+    {
+      required: true,
+      message: `Please input your ${name}`,
+      whitespace: true,
+    }
+  ],
+  errorMessage: (message) => [
+    {
+      required: true,
+      message: `${message}`,
+      whitespace: true,
+    }
+  ],
   firstName: [
     {
       required: true,
@@ -18,7 +32,7 @@ export const validate = {
   lastName: [
     {
       required: true,
-      message: "Please input your Last Name!",
+      message: "Please input your last name!",
       whitespace: true,
     },
   ],
@@ -30,9 +44,9 @@ export const validate = {
     },
   ],
   country: [{ message: "Please input your Country Name!", whitespace: true }],
-  phone: [{ message: "Please input your phone Name!", whitespace: true }],
+  phone: [{ required: true, message: "Please input your phone Name!", whitespace: true }],
   email: [
-    { type: "email", message: "The input is not valid E-mail!" },
+    { type: "email", message: "The e-mail is not valid e-mail!" },
     { required: true, message: "Please input your E-mail!" },
   ],
   oldPassword: [{ required: true, message: "Please input your Old Password!" }],
@@ -74,6 +88,13 @@ export const validateDynamicForm = {
       whitespace: true,
     },
   ],
+  required: [
+    {
+      required: true,
+      message: "field is required",
+      whitespace: true,
+    },
+  ],
   name: [
     {
       required: true,
@@ -85,6 +106,13 @@ export const validateDynamicForm = {
     {
       required: true,
       message: "Please select form type",
+      whitespace: true,
+    },
+  ],
+  visibility: [
+    {
+      required: true,
+      message: "Please select form visibility",
       whitespace: true,
     },
   ],

@@ -9,6 +9,11 @@ export const login = (token, dynamicFormToken) => {
 
 export const logout = () => {
   CookieService.removeToken();
+  CookieService.removeDynamicToken();
   window.localStorage.setItem("logout", Date.now());
   Router.push("/");
+};
+
+export const signup = () => {
+  Router.push("/auth/login");
 };

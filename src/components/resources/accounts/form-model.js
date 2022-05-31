@@ -1,10 +1,14 @@
 import React, { memo, useEffect, useRef, useState } from "react";
-import { Button, Form, Input, Modal } from "antd";
+import { Button, Form, Input, Select, Modal } from "antd";
 import { useDispatch, useSelector } from "react-redux";
 import { addAccount } from "../../../store/slices/resources/account";
 import { isClient } from "../../../utils/is-client";
 import Draggable from "react-draggable";
 import LabelAndTooltip from "../../forms/form-assets/label-and-tooltip";
+import { validate } from "../../../constants/validations";
+import { getKey } from "../../../utils/keyGenerator";
+import { getAccountsType } from "../../../store/slices/resources/account";
+import { ADD_ACCOUNT } from "../../../constants/loaderKeys";
 
 const formItemLayout = {
   labelCol: {
@@ -20,9 +24,9 @@ const formItemLayout = {
 const Model = memo(() => {
   const draggleRef = useRef(null);
   const dispatch = useDispatch();
-  const loader = useSelector(({ resources }) => resources.Account.loading);
+  const loading = useSelector(({ loader }) => loader.loading?.[ADD_ACCOUNT]);
+  const AccountTypes = useSelector(({ resources }) => resources.Account.types);
   const [visible, setVisible] = useState(false);
-  const [loading, setLoading] = useState(loader);
   const [title, setTitle] = useState("Edit Account");
   const [disabled, setDisabled] = useState(true);
   const [bounds, setBounds] = useState({
@@ -34,6 +38,7 @@ const Model = memo(() => {
 
   const onShowModal = () => {
     setVisible(true);
+    dispatch(getAccountsType());
   };
   const onCloseModal = () => {
     setVisible(false);
@@ -42,9 +47,9 @@ const Model = memo(() => {
 
   const onSubmit = async () => {
     const formData = await form.validateFields();
-    setLoading(true);
     let data = {
       name: formData.accountName,
+      accountTypeId: formData.formTypeId,
       admin: {
         userName: formData.username1,
         email: formData.email,
@@ -55,6 +60,7 @@ const Model = memo(() => {
     };
     dispatch(addAccount(data));
     form.resetFields();
+    onCloseModal();
   };
 
   const ModalHeader = () => {
@@ -91,24 +97,12 @@ const Model = memo(() => {
         <Button key="back" onClick={onCloseModal}>
           Return
         </Button>
-        <Button
-          key="submit"
-          type="primary"
-          loading={loading}
-          onClick={onSubmit}
-        >
+        <Button key="submit" type="primary" loading={loading} onClick={onSubmit}>
           Add Account
         </Button>
       </>
     );
   };
-
-  useEffect(() => {
-    if (loading) {
-      setVisible(false);
-      setLoading(false);
-    }
-  }, [loading]);
 
   const Drag = () => (model) => {
     if (isClient) {
@@ -152,101 +146,61 @@ const Model = memo(() => {
         modalRender={Drag()}
         forceRender
       >
-        <Form
-          {...formItemLayout}
-          form={form}
-          name="register"
-          scrollToFirstError
-        >
+        <Form {...formItemLayout} form={form} name="register" scrollToFirstError>
           <Form.Item
             name="accountName"
-            label={
-              <LabelAndTooltip
-                title={"Account.Name"}
-                tooltip={"Enter your company name"}
-              />
-            }
-            rules={[
-              {
-                required: true,
-                message: "Please input your Account name!",
-                whitespace: true,
-              },
-            ]}
+            label={<LabelAndTooltip title={"Account.Name"} tooltip={"Enter your company name"} />}
+            rules={validate.name("Account name ")}
           >
             <Input />
           </Form.Item>
 
           <Form.Item
             name="firstName"
-            label={
-              <LabelAndTooltip
-                title={"First.Name"}
-                tooltip={"Enter your First Name"}
-              />
-            }
-            rules={[
-              {
-                required: true,
-                message: "Please input your First Name!",
-                whitespace: true,
-              },
-            ]}
+            label={<LabelAndTooltip title={"First.Name"} tooltip={"Enter your First Name"} />}
+            rules={validate.firstName}
           >
             <Input />
           </Form.Item>
 
           <Form.Item
             name="lastName"
-            label={
-              <LabelAndTooltip
-                title={"Last.Name"}
-                tooltip={"Enter your Last Name"}
-              />
-            }
-            rules={[
-              {
-                required: true,
-                message: "Please input your Last Name!",
-                whitespace: true,
-              },
-            ]}
+            label={<LabelAndTooltip title={"Last.Name"} tooltip={"Enter your Last Name"} />}
+            rules={validate.lastName}
           >
             <Input />
           </Form.Item>
 
           <Form.Item
             name="username1"
-            label={
-              <LabelAndTooltip
-                title={"User.Name"}
-                tooltip={"Enter your Last Name"}
-              />
-            }
-            rules={[
-              {
-                required: true,
-                message: "Please input your Last Name!",
-                whitespace: true,
-              },
-            ]}
+            label={<LabelAndTooltip title={"User.Name"} tooltip={"Enter your Last Name"} />}
+            rules={validate.username}
           >
             <Input />
           </Form.Item>
 
           <Form.Item
+            label={"Account Type"}
+            hasFeedback
+            name="formTypeId"
+            rules={validate.errorMessage("Please select account type")}
+          >
+            <Select allowClear showSearch={true}>
+              {AccountTypes &&
+                AccountTypes?.map((form) => {
+                  return (
+                    <Option key={getKey()} value={form.id}>
+                      {form.name}
+                    </Option>
+                  );
+                })}
+            </Select>
+          </Form.Item>
+
+          <Form.Item
             name="email"
             label={<LabelAndTooltip title={"Email"} />}
-            rules={[
-              {
-                type: "email",
-                message: "The input is not valid E-mail!",
-              },
-              {
-                required: true,
-                message: "Please input your E-mail!",
-              },
-            ]}
+            rules={validate.email}
           >
             <Input />
           </Form.Item>
@@ -254,12 +208,7 @@ const Model = memo(() => {
           <Form.Item
             name="password"
             label={<LabelAndTooltip title={"Password"} />}
-            rules={[
-              {
-                required: true,
-                message: "Please input your password!",
-              },
-            ]}
+            rules={validate.password}
             hasFeedback
           >
             <Input.Password />
@@ -270,22 +219,7 @@ const Model = memo(() => {
             label={<LabelAndTooltip title={"Confirm.Password"} />}
             dependencies={["password"]}
             hasFeedback
-            rules={[
-              {
-                required: true,
-                message: "Please confirm your password!",
-              },
-              ({ getFieldValue }) => ({
-                validator(rule, value) {
-                  if (!value || getFieldValue("password") === value) {
-                    return Promise.resolve();
-                  }
-                  return Promise.reject(
-                    "The two passwords that you entered do not match!"
-                  );
-                },
-              }),
-            ]}
+            rules={validate.confirmPassword}
           >
             <Input.Password />
           </Form.Item>
@@ -293,9 +227,7 @@ const Model = memo(() => {
           <Form.Item
             name="phone"
             label={<LabelAndTooltip title={"Phone"} />}
-            rules={[
-              { required: true, message: "Please input your phone number!" },
-            ]}
+            rules={validate.phone}
           >
             <Input style={{ width: "100%" }} />
           </Form.Item>
@@ -305,6 +237,5 @@ const Model = memo(() => {
   );
 });
 
-Modal.displayName = Modal;
-
+Model.displayName = Model;
 export default Model;

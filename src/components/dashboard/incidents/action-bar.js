@@ -34,7 +34,6 @@ const ActionBar = memo(() => {
   };
 
   useEffect(() => {
-    console.log("Incident page dashboard", filterIncidents);
     const onFilter = { status: filterIncidents };
     dispatch(getFilteredIncidentList(onFilter));
   }, [filterIncidents]);

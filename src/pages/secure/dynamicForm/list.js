@@ -7,17 +7,18 @@ import NotFound from "../../../components/helpers/errors";
 import Form from '../../../components/resources/dynamicForm/form-card'
 import { getKey } from '../../../utils/keyGenerator'
 import { getFormTypesList, getFormTypes } from "../../../store/slices/resources/dynamicForm";
+import { getFormSubmissions } from '../../../store/slices/resources/formSubmissions'
+
 import { log } from '../../../utils/console-log'
 import config from '../../../configs'
 import Widget from "../../../components/Widget";
 import { PlusCircleOutlined } from "@ant-design/icons";
 import Link from "next/link";
 
-
 const List = memo(() => {
-  const { list } = useSelector(({ resources }) => resources.DynamicForm);
-  const formTypes = useSelector(({ resources }) => resources.DynamicForm.formType);
-  const [isLoading] = useState(false);
+  const { list, formTypes } = useSelector(({ resources }) => resources.DynamicForm);
+  const domain = useSelector(({ auth }) => auth.domain);
+
   const dispatch = useDispatch();
   let token = config.dynamicFormToken
 
@@ -26,6 +27,8 @@ const List = memo(() => {
     log("Dynamic Form Types List fetch", formTypes)
     dispatch(getFormTypesList(token))
     dispatch(getFormTypes(token))
+    const query = (domain && domain.type == 'Bank') ? { externalUser: true } : {}
+    dispatch(getFormSubmissions(query))
   }, [])
 
   return (
@@ -35,7 +38,7 @@ const List = memo(() => {
           <div>
             <h3 className='gx-my-0 gx-mt-2 gx-ml-2'>Dynamic Form List</h3>
           </div>
-          <Link href="/secure/dynamicForm" passHref>
+          <Link href="/secure/dynamicForm/new" passHref>
             <Button
               type={'primary'}
               icon={<PlusCircleOutlined />}
@@ -49,15 +52,14 @@ const List = memo(() => {
 
       <Row>
         {
-          !isLoading &&
           list &&
           list.length > 0 &&
-          list.map((form) => {
+          list.map((form, index) => {
             const formType = formTypes?.find((type) => type.id == form.formTypeId)
             return (
               <Fragment key={getKey()}>
                 <Col xl={6} lg={8} md={12} sm={12} xs={24} key={form.id}>
-                  <Form name={form.name} description={form.description} type={formType?.name} id={form.id} form={form} />
+                  <Form type={formType?.name} slug={''} form={form} submissions={false} selectedAccount={{}} />
                 </Col>
               </Fragment>
             );
@@ -65,7 +67,7 @@ const List = memo(() => {
         }
 
         {
-          !isLoading && !list.length && (
+          !list.length && (
             <>
               <Col span={24} align="middle">
                 <NotFound message={<h1>{sNO_RESULT_FOUND_BY}</h1>} />

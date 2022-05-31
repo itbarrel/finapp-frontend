@@ -37,7 +37,7 @@ const ForgotPassword = memo(() => {
   useEffect(() => {
     if (token) {
       setToken(token);
-      console.log('asdf Token', Token)
+      log('Token', Token)
     }
   }, [token]);
 

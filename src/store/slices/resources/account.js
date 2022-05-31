@@ -1,11 +1,14 @@
 import { createSlice } from "@reduxjs/toolkit";
 import { apiCallBegan, resetAll } from "../../apiActions";
+import { ADD_ACCOUNT } from "../../../constants/loaderKeys";
+
 
 const slice = createSlice({
   name: "Accounts",
   initialState: {
     loading: false,
     list: [],
+    types: [],
     item: {},
     total_items: 0,
   },
@@ -18,6 +21,10 @@ const slice = createSlice({
       state.list = payload.data;
       state.total_items = payload.total;
       state.loading = false;
+    },
+    getTypes: (state, action) => {
+      const { payload } = action;
+      state.types = payload.data;
     },
     add: (state, action) => {
       state.list.unshift(action.payload);
@@ -42,7 +49,7 @@ const slice = createSlice({
   },
 });
 
-export const { loading, all, show, add, failed } = slice.actions;
+export const { loading, all, getTypes, show, add, failed } = slice.actions;
 
 export const getAccountsList = (data) => (dispatch) => {
   return dispatch(
@@ -58,13 +65,26 @@ export const getAccountsList = (data) => (dispatch) => {
   );
 };
 
+export const getAccountsType = (data) => (dispatch) => {
+  return dispatch(
+    apiCallBegan({
+      url: "v1/accountTypes",
+      method: "get",
+      token: true,
+      data,
+      onSuccess: getTypes.type,
+      onError: failed.type,
+    })
+  );
+};
+
 export const addAccount = (data) => (dispatch) => {
   return dispatch(
     apiCallBegan({
       url: "v1/accounts",
       method: "post",
       data,
-      onStart: loading.type,
+      loadingKey: ADD_ACCOUNT,
       onSuccess: add.type,
       onError: failed.type,
       notify: true,

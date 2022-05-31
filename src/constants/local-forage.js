@@ -3,7 +3,7 @@ export const COOKIE = "ch.cookies";
 
 // auth token
 export const TOKEN_KEY = "token"; // access_token
-export const DYNAMIC_FORM_TOKEN = "Dynamic Form Token"; // dynamicFormToken
+export const DYNAMIC_FORM_TOKEN = "DynamicFormToken"; // dynamicFormToken
 
 export const NOTIFICATION_KEY = "ch.noti"; // notification seen yet
 

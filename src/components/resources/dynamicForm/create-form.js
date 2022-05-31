@@ -12,11 +12,10 @@ import config from '../../../configs'
 import Router from "next/router";
 // import { CKEditor } from '@ckeditor/ckeditor5-react/dist/ckeditor';
 // import ClassicEditor from '@ckeditor/ckeditor5-build-classic';
-import parse from 'html-react-parser';
-
+import Link from "next/link";
 
 const CreateForm = memo(({ selectedFrom }) => {
-  const formTypes = useSelector(({ resources }) => resources.DynamicForm.formType);
+  const { formTypes } = useSelector(({ resources }) => resources.DynamicForm);
   const [MultipleFormTypeId, setMultipleFormTypeId] = useState()
   const [MultipleFormType, setMultipleFormType] = useState()
   const [fieldType, setFieldType] = useState('');
@@ -77,7 +76,7 @@ const CreateForm = memo(({ selectedFrom }) => {
     }
     setEditorLoaded(true)
     if (selectedFrom) {
-      console.log('Edit form', selectedFrom)
+      log('Edit form', selectedFrom)
       form.setFieldsValue(selectedFrom)
     }
     dispatch(getFormTypes(token))
@@ -102,7 +101,7 @@ const CreateForm = memo(({ selectedFrom }) => {
     <>
       <Col>
         {
-          (MultipleFormType === false) ? (
+          (MultipleFormType === false) && (
             <Alert
               message="Informational Notes"
               description={`The form type is can have only one form ${MultipleFormType ? 'non multiple' : 'multiple'}`}
@@ -110,7 +109,7 @@ const CreateForm = memo(({ selectedFrom }) => {
               showIcon
               closable
             />
-          ) : ''
+          )
         }
         <Form.Provider>
           <Form name="DynamicForm" onFinish={onFinish} form={form} scrollToFirstError >
@@ -136,11 +135,32 @@ const CreateForm = memo(({ selectedFrom }) => {
                     className="gx-mx-0 gx-my-1"
                     rules={validateDynamicForm.formType}
                   >
-                    <Select allowClear showSearch={true} onChange={handleMultipleFormType}>
+                    <Select allowClear onChange={handleMultipleFormType}>
                       {
                         formTypes?.map((form) => {
                           return (
                             <Option key={getKey()} value={form.id}>
+                              {form.name}
+                            </Option>
+                          )
+                        })
+                      }
+                    </Select>
+                  </Form.Item>
+
+                  <Form.Item
+                    label={'Visibility'}
+                    hasFeedback
+                    name="public"
+                    className="gx-mx-0 gx-my-1"
+                    initialValue={true}
+                  // rules={validateDynamicForm.visibility}
+                  >
+                    <Select allowClear>
+                      {
+                        [{ name: 'Public', value: true }, { name: 'Private', value: false }]?.map((form) => {
+                          return (
+                            <Option key={getKey()} value={form.value}>
                               {form.name}
                             </Option>
                           )
@@ -168,7 +188,7 @@ const CreateForm = memo(({ selectedFrom }) => {
                   <Row>
                     {fields.map(({ key, name, fieldKey, ...field }, index) => {
                       return (
-                        <Fragment>
+                        <Fragment key={index}>
                           <Col xl={12} lg={12} md={24} sm={24} xs={24}>
                             <Form.Item required={false} fieldKey={[fieldKey, 'mainItem']} >
                               <Widget
@@ -189,6 +209,16 @@ const CreateForm = memo(({ selectedFrom }) => {
                                   className="gx-m-1"
                                   style={{ width: "99%" }}
                                   initialValue={getKey()}
+                                  hidden
+                                  {...field}
+                                />
+
+                                <Form.Item
+                                  name={[name, "index"]}
+                                  fieldKey={[fieldKey, 'index']}
+                                  className="gx-m-1"
+                                  style={{ width: "99%" }}
+                                  initialValue={index}
                                   hidden
                                   {...field}
                                 />
@@ -241,7 +271,7 @@ const CreateForm = memo(({ selectedFrom }) => {
                                             <Fragment key={getKey()}>
                                               <Row>
                                                 {fields.map(({ key, name, fieldKey, ...field }) => (
-                                                  <Col xl={12} lg={12} md={24} sm={24} xs={24}>
+                                                  <Col xl={12} lg={12} md={24} sm={24} xs={24} key={key}>
                                                     <Form.Item required={false} fieldKey={[fieldKey, `${fieldType}Fields`]} >
                                                       <Widget
                                                         styleName={
@@ -319,23 +349,25 @@ const CreateForm = memo(({ selectedFrom }) => {
                                     />
                                   </Form.Item>
                                 </div>
-
+                                <h4 className={'gx-mx-2'}>Please select which property will show or hide</h4>
                                 <div className='gx-d-flex gx-text-nowrap'>
                                   {
-                                    switchButtons.map((item) => {
+                                    switchButtons.map((item, buttonIndex) => {
                                       return (
-                                        <Fragment>
+                                        <Fragment key={buttonIndex}>
                                           <div className={'gx-flex gx-mx-4'}>
                                             <Form.Item
                                               name={[name, item.name]}
                                               label={item.Label}
                                               fieldKey={[fieldKey, item.name]}
-                                              valuePropName="checked"
+                                              valuePropName={"checked"}
+                                              initialValue={true}
                                               {...field}
                                             >
                                               <Switch
-                                                checkedChildren="Show"
-                                                unCheckedChildren="Hide"
+                                                defaultChecked
+                                                checkedChildren={item.Label === 'Encryption' ? 'Enable' : 'show'}
+                                                unCheckedChildren={item.Label === 'Encryption' ? 'Enable' : 'Hide'}
                                               />
                                             </Form.Item>
                                           </div>
@@ -367,13 +399,18 @@ const CreateForm = memo(({ selectedFrom }) => {
             </Form.List>
 
             <Form.Item>
+              <Link href="/secure/dynamicForm/list" passHref>
+                <Button type="info" key="back">
+                  Return
+                </Button>
+              </Link>
               <Button type="primary" htmlType="submit" className="gx-ml-3">
                 {selectedFrom ? "Update Form" : 'Submit'}
               </Button>
             </Form.Item>
           </Form>
         </Form.Provider>
-      </Col >
+      </Col>
     </>
   );
 });

@@ -1,6 +1,6 @@
 import { createSlice } from "@reduxjs/toolkit";
 import { apiCallBegan, resetAll } from "../apiActions";
-import { login as _login, logout as _logout } from "../../services/Auth";
+import { login as _login, logout as _logout, signup as _signup } from "../../services/Auth";
 import { CHANGE_PASSWORD, UPDATE_PROFILE } from "../../constants/loaderKeys";
 
 const slice = createSlice({
@@ -10,6 +10,7 @@ const slice = createSlice({
     permissions: {},
     loader: {},
     user: null,
+    domain: {},
     token: null,
     dynamicFormToken: null,
     hasErrors: false,
@@ -18,16 +19,21 @@ const slice = createSlice({
     start: (state) => {
       return state;
     },
+    signUp: (state) => {
+      state.loader = false;
+      state.hasErrors = false;
+      _signup();
+    },
     login: (state, action) => {
-      const { token, user, permissions, dynamicFormToken } = action.payload;
+      const { token, user, permissions, domain } = action.payload;
       state.loader = false;
       state.token = token;
-      state.dynamicFormToken = dynamicFormToken;
       state.isAuthenticated = !!token;
       state.permissions = permissions;
       state.user = user;
+      state.domain = domain;
       state.hasErrors = false;
-      _login(token, dynamicFormToken);
+      _login(token, domain?.dynamicFormToken);
     },
     logout: (state) => {
       _logout();
@@ -64,6 +70,7 @@ const slice = createSlice({
 
 export const {
   start,
+  signUp,
   login,
   logout,
   update,
@@ -149,6 +156,19 @@ export const confirmLogin = () => (dispatch) => {
       method: "post",
       data: {},
       onSuccess: login.type,
+      onError: failed.type,
+      notify: true,
+    })
+  );
+};
+
+export const onSignUp = (data) => (dispatch) => {
+  return dispatch(
+    apiCallBegan({
+      url: "v1/customers",
+      method: "post",
+      data,
+      onSuccess: signUp.type,
       onError: failed.type,
       notify: true,
     })

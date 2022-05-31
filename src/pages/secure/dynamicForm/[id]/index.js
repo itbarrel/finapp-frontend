@@ -2,14 +2,15 @@ import React, { Fragment, memo, useState } from 'react'
 import { useRouter } from 'next/router'
 import { useSelector } from 'react-redux';
 import { Form, Input, Button, Checkbox, Select, Col, Radio } from "antd";
-import { validate } from "../../../constants/validations";
-import { getKey } from "../../../utils/keyGenerator";
-import withLayout from "../../../layouts/app-layout";
-import Widget from "../../../components/Widget";
-import { log } from '../../../utils/console-log'
-import NotFound from "../../../components/helpers/errors";
-import { sNO_RESULT_FOUND_BY } from "../../../constants/messages";
+import { validate } from "../../../../constants/validations";
+import { getKey } from "../../../../utils/keyGenerator";
+import withLayout from "../../../../layouts/app-layout";
+import Widget from "../../../../components/Widget";
+import { log } from '../../../../utils/console-log'
+import NotFound from "../../../../components/helpers/errors";
+import { sNO_RESULT_FOUND_BY } from "../../../../constants/messages";
 import parse from 'html-react-parser';
+import Router from "next/router";
 
 const { Option } = Select;
 
@@ -21,6 +22,10 @@ const View = memo(() => {
 
   const onFinish = (formData) => {
     log("Form Data Submit", formData);
+  };
+
+  const back = () => {
+    Router.push("/secure/dynamicForm/list");
   };
 
   return (
@@ -36,7 +41,7 @@ const View = memo(() => {
               <p className="gx-text-grey gx-fs-xl "> {selectedFrom.name} - {selectedFrom.type} </p>
               <p className="gx-text-grey gx-fs-md gx-mb-4">{selectedFrom.description} </p>
               {
-                selectedFrom?.fields?.map((data, index) => {
+                selectedFrom?.fields && selectedFrom?.fields.length > 0 && selectedFrom?.fields?.map((data, index) => {
                   const { label, label_input, isInput, isLabel, isDescription, isEncryption, input_type, options, ckeditor, model, description } = data
                   const SelectedTextFieldType = {
                     text_field: <Input hidden={isInput ? false : true} />,
@@ -74,13 +79,20 @@ const View = memo(() => {
                   };
                   return (
                     <Fragment key={getKey()}>
-                      <Form.Item
-                        name={model} // label
-                        label={isLabel ? label : ''}
-                      >
-                        {SelectedTextFieldType[input_type]}
-                      </Form.Item>
-                      {(isDescription && description) && (parse(parse(description)))}
+                      {isLabel ? label : ''}
+                      {
+                        isInput && (
+                          <>
+                            <Form.Item
+                              name={model} // label
+                            // label={isLabel ? label : ''}
+                            >
+                              {SelectedTextFieldType[input_type]}
+                            </Form.Item>
+                          </>
+                        )
+                      }
+                      {(isDescription && description) && (parse(description))}
                     </Fragment>
                   )
                 })
@@ -89,6 +101,9 @@ const View = memo(() => {
               {
                 selectedFrom?.fields &&
                 <Form.Item>
+                  <Button type="info" className="gx-ml-3" onClick={back}>
+                    Return
+                  </Button>
                   <Button type="primary" htmlType="submit" className="gx-ml-3">
                     Submit
                   </Button>

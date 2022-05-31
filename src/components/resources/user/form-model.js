@@ -10,7 +10,7 @@ import Draggable from "react-draggable";
 import LabelAndTooltip from "../../forms/form-assets/label-and-tooltip";
 import { PlusCircleOutlined } from "@ant-design/icons";
 import PropTypes from "prop-types";
-import {validate} from '../../../constants/validations'
+import { validate } from '../../../constants/validations'
 
 const formItemLayout = {
   labelCol: {
@@ -207,18 +207,18 @@ const Model = memo(({ visible, setVisible, selectedUser, title, off }) => {
             <Input />
           </Form.Item>
 
-          <Form.Item
-            name="len"
+          {/* <Form.Item
+            name="phone"
             label={
               <LabelAndTooltip
                 title={"Mobile.Phone"}
                 tooltip={"Enter your Mobile Number"}
               />
             }
-            rules={validate.phone}
+            // rules={validate.phone}
           >
             <Input />
-          </Form.Item>
+          </Form.Item> */}
 
           <Form.Item label="Role" hasFeedback name="RoleId">
             <Select allowClear showSearch={true}>
